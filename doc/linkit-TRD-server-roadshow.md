@@ -1,4 +1,4 @@
-# IFLand 服务端路演版 TRD（比赛快速开发）
+﻿# linkit 服务端路演版 TRD（比赛快速开发）
 
 > 目标：2 周内可 Demo。砍掉一切非必需，保留核心差异化。AI 友好。
 
@@ -307,3 +307,4 @@ const questions = [
 | Day 7 | chat (REST+Socket.IO) | 个人资料页 |
 | Day 8 | points 模块 | 排行榜+积分签到+空状态+Loading |
 | Day 9-10 | 联调+修复+动画打磨 | 联调+桌面手机框美化+Demo 预演 |
+

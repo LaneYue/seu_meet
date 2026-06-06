@@ -1,4 +1,4 @@
-# IFLand 前端技术需求文档（TRD-App）
+﻿# linkit 前端技术需求文档（TRD-App）
 
 ---
 
@@ -447,3 +447,4 @@ String userFacingMessage(int code) => switch (code) {
 | 聊天内存清理 | 离开 ChatDetailPage → dispose 消息列表 |
 | 截屏提示 | 可选：查看他人资料时检测截屏并警告 |
 | 发布混淆 | `flutter build --obfuscate --split-debug-info` |
+

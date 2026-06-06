@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>路线 - 东大同行</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2e3132",
+                        "tertiary-container": "#ead2b9",
+                        "on-tertiary-fixed-variant": "#544431",
+                        "inverse-primary": "#79d8b6",
+                        "tertiary": "#6d5b47",
+                        "on-background": "#191c1d",
+                        "secondary-container": "#a5c5fd",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed-dim": "#a8c8ff",
+                        "on-tertiary-fixed": "#261909",
+                        "primary": "#006c52",
+                        "on-secondary-fixed": "#001b3c",
+                        "primary-container": "#88e8c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#3f5f91",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#00513d",
+                        "tertiary-fixed": "#f7dec5",
+                        "on-tertiary-container": "#6b5945",
+                        "on-secondary-container": "#305182",
+                        "secondary-fixed": "#d6e3ff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "outline-variant": "#bdc9c2",
+                        "on-primary-container": "#006950",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#254777",
+                        "primary-fixed-dim": "#79d8b6",
+                        "surface-container-high": "#e7e8e9",
+                        "tertiary-fixed-dim": "#dac3aa",
+                        "background": "#f8f9fa",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "surface-tint": "#006c52",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "on-primary-fixed": "#002117",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#3e4944",
+                        "primary-fixed": "#95f5d1",
+                        "outline": "#6e7a74",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "1.25rem",
+                        "stack-gap": "1rem",
+                        "inline-gap": "0.75rem",
+                        "section-margin": "2rem"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean horizontal scrolls */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Glassmorphism Tier 2 Base Class */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        
+        .dark .glass-card {
+            background-color: rgba(46, 49, 50, 0.7);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden relative min-h-screen pb-[100px] pt-[80px]">
+<!-- Ambient Background (Tier 1 Mesh Gradient feel) -->
+<div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none opacity-40">
+<div class="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-primary-container rounded-full mix-blend-multiply filter blur-[80px] opacity-70"></div>
+<div class="absolute bottom-[20%] right-[-10%] w-[50vw] h-[50vw] bg-secondary-container rounded-full mix-blend-multiply filter blur-[80px] opacity-60"></div>
+</div>
+<!-- TopAppBar (From JSON) -->
+<header class="bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/30 dark:border-white/10 shadow-sm flex justify-between items-center px-container-padding h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container flex-shrink-0 cursor-pointer active:scale-95 duration-200 hover:opacity-80 transition-opacity">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLu2rwqKwr7eIC0Dc7QRABqha5Xo-ej4a-kqJoZcKxnxoG-fej5AOWT6C_n-qv6IhynUeLF3L9SV7dZ7iipYBiVS9MDrTHiV-afbGyvkY2OjGrkXzDG-Tu9tidF31XA3Xmd-PUOIOwbrWrF3h6vCtOJFfkN907sHwJquz6VyUkMJ2gckGlpXvvBRTvLMDYzOgrgrYShDYnqOFNOoctq5Do_FRQJ1UuKSLakOGBuDiUpBRrpRGKB8nJeJXPI"/>
+</div>
+<h1 class="font-headline-xl text-headline-xl font-bold text-primary dark:text-inverse-primary">东大同行</h1>
+</div>
+<button class="text-primary dark:text-inverse-primary active:scale-95 duration-200 hover:opacity-80 transition-opacity p-2 -mr-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</button>
+</header>
+<main class="w-full max-w-[390px] mx-auto flex flex-col gap-section-margin px-[20px]">
+<!-- Header Section: Title, Search, Campuses -->
+<section class="flex flex-col gap-stack-gap mt-2">
+<h2 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">探索路线</h2>
+<!-- Search Bar (Capsule, 56px height, soft glass) -->
+<div class="glass-card h-[56px] rounded-full flex items-center px-5 gap-3 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-primary text-[24px]">search</span>
+<input class="bg-transparent border-none outline-none text-body-lg text-on-surface placeholder:text-outline w-full p-0 focus:ring-0" placeholder="寻找同行伙伴或路线..." type="text"/>
+</div>
+<!-- Campus Filters -->
+<div class="flex gap-2 p-1 bg-surface-container-low rounded-xl">
+<button class="flex-1 py-2 rounded-lg bg-white shadow-sm font-label-md text-label-md text-primary text-center transition-all">九龙湖</button>
+<button class="flex-1 py-2 rounded-lg font-label-md text-label-md text-on-surface-variant text-center hover:bg-white/50 transition-all">四牌楼</button>
+<button class="flex-1 py-2 rounded-lg font-label-md text-label-md text-on-surface-variant text-center hover:bg-white/50 transition-all">丁家桥</button>
+</div>
+</section>
+<!-- Quick Filters -->
+<section class="w-full">
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-[20px] px-[20px]">
+<!-- Capsule Tags -->
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary-container/20 border border-primary-container/30 whitespace-nowrap active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-[18px]">menu_book</span>
+<span class="font-label-md text-label-md text-on-surface">学习研讨</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-tertiary-container/20 border border-tertiary-container/30 whitespace-nowrap active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-[18px]">palette</span>
+<span class="font-label-md text-label-md text-on-surface">文化同行</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-secondary-container/20 border border-secondary-container/30 whitespace-nowrap active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-secondary text-[18px]">sports_basketball</span>
+<span class="font-label-md text-label-md text-on-surface">运动打卡</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container-high border border-outline-variant/30 whitespace-nowrap active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-outline text-[18px]">volunteer_activism</span>
+<span class="font-label-md text-label-md text-on-surface">公益活动</span>
+</button>
+</div>
+</section>
+<!-- Main List: Route Cards -->
+<section class="flex flex-col gap-stack-gap">
+<div class="flex items-center justify-between mb-1">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">官方推荐路线</h3>
+</div>
+<!-- Card 1 -->
+<article class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer active:scale-[0.98] transition-transform duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A serene view of a modern university campus library interior during daytime. Soft, diffused natural light streams through large glass windows, highlighting rows of neat desks and students studying quietly. The scene is characterized by a bright, light-mode aesthetic with clean architectural lines, lush indoor plants adding touches of mint green, and a breezy, supportive, and intellectual atmosphere consistent with a contemporary educational environment." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtzPLpi1epG2pD7nPbmozgJuv1gqArAM-89EU_n_q5ZB-qiNGDd0UDgc_sgLVT0tAdZkYK6XSCu8sNBPkRU43jAyWM8Tt6h7XGvnJL0QbKJ00Puq-0UDsSGfwbVbVQqZ1uNnIjelGE9ci_-Caseuqnm5qw_N-Om4M6XN2bQXZVGjT9yejyfIgrPJ2unhgRrAVSBYhVLJXHDBGWjS6dg-umI7AlamNecdq9X8IqPi5Zbb1HVYbjNggYjew');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-md flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-label-sm text-label-sm text-on-surface">高人气</span>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div>
+<h4 class="font-headline-lg text-headline-lg text-on-surface mb-1">九龙湖学习搭子路线</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">李文正图书馆 - 教学楼 - 大学生涯中心</p>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-label-sm text-label-sm">约 2 小时</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="font-label-sm text-label-sm">124 人参与</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-5 py-2 rounded-full transition-colors shadow-sm">
+                            出发
+                        </button>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer active:scale-[0.98] transition-transform duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="An exterior view of classic, historic university architecture under a clear, bright sky. The building features elegant brickwork and tall, arched windows, evoking a sense of rich academic heritage. The surrounding landscape includes vibrant green trees casting soft, dappled shadows on clean pathways. The overall composition feels optimistic, low-pressure, and culturally enriching, maintaining a soft-minimalist light-mode style suitable for a campus exploration app." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtHMKVfFx599weHji3hAluMjZgG8DCSPzSEOJkWwEo7TdzztoeT-RjPHrNDQmSnPfVT275ha6wKOO8YAa2iDRUk4PJ6LKKex-T-J7StnHzMSH8pFgj-r09C_3y5rQsuQ9ZFi7WifV4wpzbwBzUrpiMu9AKXOQHu2JP5vk_kPjNDgRljfTxWMW5_cnrhl4TEWO1FLocM3ev8rfvFS3EOH8bkibaMr1opjH6heYSoyyn03gF7rGn7jfCUmRY');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div>
+<h4 class="font-headline-lg text-headline-lg text-on-surface mb-1">四牌楼文化同行路线</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">大礼堂 - 梅庵 - 东南大学校史馆</p>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-label-sm text-label-sm">约 1.5 小时</span>
+</div>
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="font-label-sm text-label-sm">89 人参与</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-on-primary font-label-md text-label-md px-5 py-2 rounded-full transition-colors shadow-sm">
+                            出发
+                        </button>
+</div>
+</div>
+</article>
+</section>
+<!-- Bottom Section: Badges & Peer Value -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Badges Preview -->
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between aspect-square">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-3 flex justify-between items-center">
+                        我的徽章
+                        <span class="material-symbols-outlined text-outline text-[16px]">chevron_right</span>
+</h4>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-auto">
+<div class="aspect-square bg-primary-container/30 rounded-full flex items-center justify-center relative group">
+<div class="absolute inset-0 bg-primary/20 blur-md rounded-full"></div>
+<span class="material-symbols-outlined text-primary text-[24px] relative z-10" style="font-variation-settings: 'FILL' 1;">local_florist</span>
+</div>
+<div class="aspect-square bg-secondary-container/30 rounded-full flex items-center justify-center relative">
+<div class="absolute inset-0 bg-secondary/20 blur-md rounded-full"></div>
+<span class="material-symbols-outlined text-secondary text-[24px]" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+<div class="aspect-square bg-tertiary-container/30 rounded-full flex items-center justify-center relative">
+<span class="material-symbols-outlined text-tertiary/50 text-[24px]">lock</span>
+</div>
+<div class="aspect-square bg-surface-container/50 rounded-full flex items-center justify-center border border-dashed border-outline-variant">
+<span class="font-label-sm text-label-sm text-outline-variant">+3</span>
+</div>
+</div>
+</div>
+<!-- Peer Value Card -->
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between aspect-square">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">同行值</h4>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-xl text-headline-xl text-primary">340</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">/ 500</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">距下一等级</span>
+<span class="font-label-sm text-label-sm text-primary">LV.4</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[68%] transition-all duration-1000 ease-out"></div>
+</div>
+<p class="font-label-sm text-label-sm text-outline mt-1 leading-tight">参与路线获取更多同行值</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (From JSON) -->
+<nav class="bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/30 dark:border-white/10 shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] flex justify-around items-center h-20 px-4 pb-safe w-full">
+<!-- Inactive: 同行 -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-label-sm text-label-sm">同行</span>
+</a>
+<!-- Active: 路线 -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label-sm text-label-sm">路线</span>
+</a>
+<!-- Inactive: 消息 -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="font-label-sm text-label-sm">消息</span>
+</a>
+</nav>
+</body></html>
