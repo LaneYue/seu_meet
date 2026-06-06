@@ -62,6 +62,7 @@ export type ChatItem = {
   time: string
   unread: number
   avatar: string
+  sessionType?: string
 }
 
 export type RouteStep = {

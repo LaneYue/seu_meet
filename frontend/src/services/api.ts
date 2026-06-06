@@ -43,6 +43,8 @@ type BackendCard = BackendUser & {
 type BackendChatSession = {
   sessionId: string
   stage: string
+  sessionType: string
+  unreadCount: number
   targetUser: { id: string; nickname: string; avatar: string | null; college: string } | null
   lastMessage: { content: string; type: string; createdAt: string } | null
   updatedAt: string | null
@@ -73,8 +75,9 @@ function sessionToChat(s: BackendChatSession): ChatItem {
     tag: s.targetUser?.college ?? "",
     message: s.lastMessage?.content ?? "",
     time: s.updatedAt ? new Date(s.updatedAt).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }) : "",
-    unread: 0,
+    unread: s.unreadCount ?? 0,
     avatar: s.targetUser?.nickname?.charAt(0) ?? "?",
+    sessionType: s.sessionType ?? "normal",
   }
 }
 
@@ -104,56 +107,185 @@ export const apiLinkitService: LinkitService = {
   },
 
   partners: {
-    async listPosts(): Promise<PartnerPost[]> {
-      // 后端暂无广场接口，保留 mock 兜底
-      const { partnerPosts } = await import("../data/mock/linkit")
-      return partnerPosts
-    },
-
-    async createPost(payload: CreatePartnerPostPayload): Promise<PartnerPost> {
-      return {
-        id: `local-${Date.now()}`,
-        title: payload.title,
-        status: "招募中",
-        time: payload.time,
-        place: payload.place,
-        joined: 1,
-        total: payload.capacity,
-        note: payload.note,
-        tone: payload.type === "sport" ? "purple" : payload.type === "life" ? "orange" : "green",
+    async listPosts(params?: { category?: string; page?: number; pageSize?: number }): Promise<PartnerPost[]> {
+      try {
+        const query = new URLSearchParams()
+        if (params?.category) query.set("category", params.category)
+        if (params?.page) query.set("page", String(params.page))
+        if (params?.pageSize) query.set("pageSize", String(params.pageSize))
+        const qs = query.toString()
+        const data = await http.get<{
+          list: Array<{
+            id: string; title: string; category: string; status: string
+            time: string; place: string; joined: number; total: number
+            note: string; author: { id: string; nickname: string; avatar: string | null }
+            createdAt: string
+          }>
+        }>(`/plaza/posts${qs ? `?${qs}` : ""}`)
+        return data.list.map((p) => ({
+          id: p.id,
+          title: p.title,
+          status: p.status === "recruiting" ? "招募中" : p.status === "in_progress" ? "进行中" : "已结束",
+          time: p.time,
+          place: p.place,
+          joined: p.joined,
+          total: p.total,
+          note: p.note ?? "",
+          tone: p.category === "study" ? "green" : p.category === "sport" ? "purple" : p.category === "life" ? "orange" : "blue",
+        }))
+      } catch {
+        const { partnerPosts } = await import("../data/mock/linkit")
+        return partnerPosts
       }
     },
 
-    async submitAction(): Promise<{ ok: true }> {
+    async createPost(payload: CreatePartnerPostPayload): Promise<PartnerPost> {
+      try {
+        const data = await http.post<{
+          id: string; title: string; category: string; status: string
+          time: string; place: string; joined: number; total: number
+          note: string; author: { id: string; nickname: string; avatar: string | null }
+        }>("/plaza/posts", {
+          title: payload.title,
+          category: payload.type,
+          time: payload.time,
+          place: payload.place,
+          capacity: payload.capacity,
+          note: payload.note,
+        })
+        return {
+          id: data.id,
+          title: data.title,
+          status: data.status === "recruiting" ? "招募中" : data.status,
+          time: data.time,
+          place: data.place,
+          joined: data.joined,
+          total: data.total,
+          note: data.note ?? "",
+          tone: payload.type === "sport" ? "purple" : payload.type === "life" ? "orange" : "green",
+        }
+      } catch {
+        return {
+          id: `local-${Date.now()}`,
+          title: payload.title,
+          status: "招募中",
+          time: payload.time,
+          place: payload.place,
+          joined: 1,
+          total: payload.capacity,
+          note: payload.note,
+          tone: payload.type === "sport" ? "purple" : payload.type === "life" ? "orange" : "green",
+        }
+      }
+    },
+
+    async submitAction(postId: string, action: string): Promise<{ ok: true }> {
+      try {
+        await http.post(`/plaza/posts/${postId}/action`, { action })
+      } catch { /* fallback */ }
       return { ok: true }
     },
   },
 
   routes: {
     async listRoutes(): Promise<CampusRoute[]> {
-      // 后端暂无路线接口，保留 mock 兜底
-      const { routes } = await import("../data/mock/linkit")
-      return routes
+      try {
+        const data = await http.get<{
+          list: Array<{
+            id: string; title: string; badge: string; campus: string
+            duration: string; difficulty: string; participantCount: number
+            nodeCount: number; userProgress: number; coverImage: string | null
+            intro: string; tags: string[]
+          }>
+        }>("/routes?campus=九龙湖")
+        return data.list.map((r) => ({
+          id: r.id,
+          title: r.title,
+          badge: r.badge,
+          campus: r.campus,
+          duration: r.duration,
+          difficulty: r.difficulty,
+          people: r.participantCount > 1000 ? `${(r.participantCount / 1000).toFixed(1)}k` : String(r.participantCount),
+          nodes: r.nodeCount,
+          progress: r.userProgress,
+          image: r.coverImage ?? "",
+          intro: r.intro,
+          tags: r.tags,
+        }))
+      } catch {
+        const { routes } = await import("../data/mock/linkit")
+        return routes
+      }
     },
 
     async getRoute(routeId: string): Promise<CampusRoute | undefined> {
-      const { routes } = await import("../data/mock/linkit")
-      return routes.find((r) => r.id === routeId)
+      try {
+        const data = await http.get<{
+          id: string; title: string; badge: string; campus: string
+          duration: string; difficulty: string; participantCount: number
+          nodeCount: number; userProgress: number; coverImage: string | null
+          intro: string; tags: string[]; steps: Array<{ id: string; title: string; desc: string; method: string; status: string }>
+        }>(`/routes/${routeId}`)
+        return {
+          id: data.id,
+          title: data.title,
+          badge: data.badge,
+          campus: data.campus,
+          duration: data.duration,
+          difficulty: data.difficulty,
+          people: data.participantCount > 1000 ? `${(data.participantCount / 1000).toFixed(1)}k` : String(data.participantCount),
+          nodes: data.nodeCount,
+          progress: data.userProgress,
+          image: data.coverImage ?? "",
+          intro: data.intro,
+          tags: data.tags,
+        }
+      } catch {
+        const { routes } = await import("../data/mock/linkit")
+        return routes.find((r) => r.id === routeId)
+      }
     },
 
-    async listSteps(): Promise<RouteStep[]> {
-      const { routeSteps } = await import("../data/mock/linkit")
-      return routeSteps
+    async listSteps(routeId: string): Promise<RouteStep[]> {
+      try {
+        const data = await http.get<{
+          steps: Array<{ id: string; title: string; desc: string; method: string; status: string }>
+        }>(`/routes/${routeId}`)
+        return data.steps
+      } catch {
+        const { routeSteps } = await import("../data/mock/linkit")
+        return routeSteps
+      }
     },
 
     async listBadges(): Promise<BadgeItem[]> {
-      const { badges } = await import("../data/mock/linkit")
-      return badges
+      try {
+        const icons: Record<string, any> = await import("lucide-react")
+        const data = await http.get<{
+          list: Array<{ id: string; name: string; level: string; icon: string; unlockedAt: string | null }>
+        }>("/routes/badges/me")
+        return data.list.map((b) => ({
+          name: b.name,
+          level: b.level,
+          icon: icons[b.icon] ?? icons.Compass,
+        }))
+      } catch {
+        const { badges } = await import("../data/mock/linkit")
+        return badges
+      }
     },
 
-    async checkIn(): Promise<{ ok: true }> {
-      await http.post("/points/checkin")
-      return { ok: true }
+    async checkIn(routeId: string, stepId: string): Promise<{ ok: true; userProgress?: number }> {
+      try {
+        const data = await http.post<{ stepId: string; userProgress: number; pointsAwarded: number; balanceAfter: number }>(
+          `/routes/${routeId}/checkin`,
+          { stepId },
+        )
+        return { ok: true, userProgress: data.userProgress }
+      } catch {
+        await http.post("/points/checkin")
+        return { ok: true }
+      }
     },
   },
 
@@ -174,6 +306,13 @@ export const apiLinkitService: LinkitService = {
         content: payload.content,
         type: "text",
       })
+      return { ok: true }
+    },
+
+    async markRead(chatId: string): Promise<{ ok: true }> {
+      try {
+        await http.post(`/chat/sessions/${chatId}/read`)
+      } catch { /* fallback */ }
       return { ok: true }
     },
   },

@@ -77,6 +77,7 @@ export type MessageService = {
   listChats(category?: MessageCategory): Promise<ChatItem[]>
   getChat(chatId: string): Promise<ChatItem | undefined>
   sendMessage(payload: SendMessagePayload): Promise<{ ok: true }>
+  markRead(chatId: string): Promise<{ ok: true }>
 }
 
 export type ProfileService = {
@@ -141,7 +142,8 @@ export const mockLinkitService: LinkitService = {
   messages: {
     listChats: (category = "all") => resolveMock(chats.filter((chat) => messageCategoryChatIds[category].includes(chat.id))),
     getChat: (chatId) => resolveMock(chats.find((chat) => chat.id === chatId)),
-    sendMessage: () => resolveMock({ ok: true })
+    sendMessage: () => resolveMock({ ok: true }),
+    markRead: () => resolveMock({ ok: true }),
   },
   profile: {
     getMe: () => resolveMock(myProfile),

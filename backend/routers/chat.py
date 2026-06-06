@@ -3,6 +3,7 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
+from datetime import datetime, timezone
 
 from database import get_db
 from models.user import User
@@ -11,6 +12,28 @@ from schemas import ok, error
 from routers.auth_deps import get_current_user
 
 router = APIRouter()
+
+
+def _unread_count(db: Session, session: ChatSession, user_id: str) -> int:
+    """计算该会话中对方发来的未读消息数"""
+    return (
+        db.query(Message)
+        .filter(
+            Message.sessionId == session.id,
+            Message.senderId != user_id,
+            Message.readAt == None,
+        )
+        .count()
+    )
+
+
+def _session_type(session: ChatSession) -> str:
+    """根据会话 stage 返回 sessionType"""
+    return {
+        "ice_breaking": "relationship",
+        "normal": "normal",
+        "intimate": "intimate",
+    }.get(session.stage, "normal")
 
 
 @router.get("/sessions")
@@ -37,6 +60,8 @@ async def list_sessions(
         list_data.append({
             "sessionId": s.id,
             "stage": s.stage,
+            "sessionType": _session_type(s),
+            "unreadCount": _unread_count(db, s, current_user.id),
             "targetUser": {
                 "id": other.id, "nickname": other.nickname, "avatar": other.avatar,
                 "college": other.college,
@@ -123,3 +148,28 @@ async def send_message(
         "isMe": True,
         "createdAt": msg.createdAt.isoformat() if msg.createdAt else None,
     })
+
+
+@router.post("/sessions/{session_id}/read")
+async def mark_read(
+    session_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """标记会话中对方发来的所有消息为已读"""
+    session = db.query(ChatSession).filter(ChatSession.id == session_id).first()
+    if not session:
+        return error(10004, "会话不存在")
+
+    if session.user1Id != current_user.id and session.user2Id != current_user.id:
+        return error(10003, "无权操作")
+
+    now = datetime.now(timezone.utc)
+    db.query(Message).filter(
+        Message.sessionId == session_id,
+        Message.senderId != current_user.id,
+        Message.readAt == None,
+    ).update({"readAt": now})
+
+    db.commit()
+    return ok({"read": True})

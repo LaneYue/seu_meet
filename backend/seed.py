@@ -273,6 +273,175 @@ for q in questions_data:
 db.commit()
 print(f"  ✅ 创建了 {len(questions_data)} 道种子破冰题")
 
+# ────────────────────────────
+# 4. 种子广场帖子 (5条)
+# ────────────────────────────
+from models.plaza import PlazaPost, PlazaParticipant
+
+plaza_posts = [
+    {
+        "title": "今晚图书馆自习搭子",
+        "category": "study",
+        "status": "recruiting",
+        "time": "今天 19:00-22:00",
+        "place": "九龙湖图书馆 · 研习区",
+        "capacity": 6,
+        "note": "一起专注学习，互相监督，效率翻倍。",
+        "author_idx": 0,
+    },
+    {
+        "title": "周三下午羽毛球",
+        "category": "sport",
+        "status": "recruiting",
+        "time": "周三 15:00-17:00",
+        "place": "九龙湖体育馆 · 羽毛球场",
+        "capacity": 4,
+        "note": "找羽毛球搭子，水平一般般，主要是锻炼身体。",
+        "author_idx": 2,
+    },
+    {
+        "title": "周末四牌楼CityWalk",
+        "category": "life",
+        "status": "recruiting",
+        "time": "周六 14:00-17:00",
+        "place": "四牌楼校区 · 大礼堂门口集合",
+        "capacity": 5,
+        "note": "一起走走四牌楼，拍拍梧桐大道，喝喝咖啡。",
+        "author_idx": 1,
+    },
+    {
+        "title": "摄影小分队——紫金山日落",
+        "category": "interest",
+        "status": "recruiting",
+        "time": "周日 16:00-19:00",
+        "place": "紫金山天文台",
+        "capacity": 4,
+        "note": "摄影爱好者组队拍紫金山日落，设备不限，手机也行。",
+        "author_idx": 6,
+    },
+    {
+        "title": "期末高数复习组",
+        "category": "study",
+        "status": "recruiting",
+        "time": "每天 18:00-22:00",
+        "place": "九龙湖图书馆三楼",
+        "capacity": 8,
+        "note": "期末高数复习搭子，一起刷题，互相答疑。",
+        "author_idx": 12,
+    },
+]
+
+for pp in plaza_posts:
+    author_nickname = users_data[pp["author_idx"]]["nickname"]
+    author = db.query(User).filter(User.nickname == author_nickname).first()
+    post = PlazaPost(
+        authorId=author.id,
+        title=pp["title"],
+        category=pp["category"],
+        status=pp["status"],
+        time=pp["time"],
+        place=pp["place"],
+        capacity=pp["capacity"],
+        joined=pp.get("joined", 1),
+        note=pp["note"],
+    )
+    db.add(post)
+    db.flush()
+    # 作者自动加入自己的帖子
+    db.add(PlazaParticipant(postId=post.id, userId=author.id, status="joined"))
+
+db.commit()
+print(f"  ✅ 创建了 {len(plaza_posts)} 条种子广场帖子")
+
+# ────────────────────────────
+# 5. 种子路线 (3条)
+# ────────────────────────────
+from models.route import CampusRoute, RouteStep
+
+route_data = [
+    {
+        "title": "九龙湖学习搭子路线",
+        "badge": "官方路线",
+        "campus": "九龙湖",
+        "duration": "约 1 天",
+        "difficulty": "轻松",
+        "participantCount": 1200,
+        "nodeCount": 5,
+        "coverImage": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=400",
+        "intro": "从图书馆到教学楼，串起一次温和的共同学习行动。",
+        "tags": ["自习", "图书馆", "守约"],
+        "steps": [
+            {"title": "图书馆入口集合", "desc": "在公共空间完成队伍确认，开启路线。", "method": "扫码打卡"},
+            {"title": "研习区专注时段", "desc": "完成 45 分钟共同学习。", "method": "计时打卡"},
+            {"title": "咖啡休息", "desc": "去图书馆咖啡吧休息15分钟，互相交流。", "method": "扫码打卡"},
+            {"title": "教学楼自习", "desc": "转移到教学楼自习室继续学习。", "method": "扫码打卡"},
+            {"title": "总结交流", "desc": "分享当天的学习收获和心得。", "method": "拍照打卡"},
+        ],
+    },
+    {
+        "title": "四牌楼文艺探索路线",
+        "badge": "官方路线",
+        "campus": "四牌楼",
+        "duration": "约 半天",
+        "difficulty": "轻松",
+        "participantCount": 850,
+        "nodeCount": 4,
+        "coverImage": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400",
+        "intro": "漫步百年校园，发现那些藏在角落里的故事。",
+        "tags": ["摄影", "历史", "CityWalk"],
+        "steps": [
+            {"title": "校门口梧桐大道", "desc": "从标志性的梧桐大道开始旅程。", "method": "拍照打卡"},
+            {"title": "大礼堂打卡", "desc": "参观大礼堂，了解百年校史。", "method": "扫码打卡"},
+            {"title": "孟芳图书馆", "desc": "在图书馆门口拍摄毕业照同款位置。", "method": "拍照打卡"},
+            {"title": "六朝松", "desc": "找到千年古树六朝松并拍照。", "method": "拍照打卡"},
+        ],
+    },
+    {
+        "title": "丁家桥医学健康路线",
+        "badge": "用户路线",
+        "campus": "丁家桥",
+        "duration": "约 2 小时",
+        "difficulty": "中等",
+        "participantCount": 320,
+        "nodeCount": 3,
+        "coverImage": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400",
+        "intro": "探索丁家桥校区，了解医学健康知识。",
+        "tags": ["医学", "健康", "探索"],
+        "steps": [
+            {"title": "医学院大厅集合", "desc": "在医学院大厅进行路线说明和安全须知。", "method": "扫码打卡"},
+            {"title": "人体科学馆参观", "desc": "参观人体科学馆，了解人体结构。", "method": "计时打卡"},
+            {"title": "综合楼健康讲座", "desc": "参加健康知识小讲座。", "method": "扫码打卡"},
+        ],
+    },
+]
+
+for rd in route_data:
+    route = CampusRoute(
+        title=rd["title"],
+        badge=rd["badge"],
+        campus=rd["campus"],
+        duration=rd["duration"],
+        difficulty=rd["difficulty"],
+        participantCount=rd["participantCount"],
+        nodeCount=rd["nodeCount"],
+        coverImage=rd["coverImage"],
+        intro=rd["intro"],
+        tags=rd["tags"],
+    )
+    db.add(route)
+    db.flush()
+    for i, step in enumerate(rd["steps"]):
+        db.add(RouteStep(
+            routeId=route.id,
+            title=step["title"],
+            desc=step["desc"],
+            method=step["method"],
+            sortOrder=i,
+        ))
+
+db.commit()
+print(f"  ✅ 创建了 {len(route_data)} 条种子路线")
+
 print("\n🎉 种子数据初始化完成！")
 print(f"   默认密码: 123456")
 print(f"   学号范围: 213200001 - 213200020")
