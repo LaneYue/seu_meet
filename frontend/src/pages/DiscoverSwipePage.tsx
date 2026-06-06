@@ -1,6 +1,6 @@
 import { useMemo, useState, type PointerEvent } from "react"
 import { useNavigate } from "react-router-dom"
-import { StatusBar } from "../components/AppShell"
+import { BottomNav } from "../components/AppShell"
 import { PublicProfileCard } from "../components/PublicProfileCard"
 import { discoverProfiles } from "../data/mock/linkit"
 
@@ -105,9 +105,9 @@ export function DiscoverSwipePage() {
   }
 
   return (
-    <div className="app-screen discover-fullscreen">
-      <StatusBar />
+    <div className="app-screen discover-fullscreen with-tabbar">
       <section className="discover-page fullscreen">
+        <button className="home-toggle top-left" onClick={() => navigate("/home/feed")} type="button">主页</button>
         <div className="discover-stack fullscreen" aria-label="同行推送名片">
           <article className="discover-card ghost two fullscreen-ghost" aria-hidden="true">
             <img src={thirdProfile.photos[0]} alt="" />
@@ -134,9 +134,9 @@ export function DiscoverSwipePage() {
             }}
           />
         </div>
-        <button className="home-toggle standalone" onClick={() => navigate("/home/feed")} type="button">主页</button>
         <p className="gesture-hint fullscreen">{gestureLabel}</p>
       </section>
+      <BottomNav transparent />
     </div>
   )
 }

@@ -112,6 +112,20 @@ button {
   backdrop-filter: blur(18px);
 }
 
+.bottom-nav-transparent {
+  background: rgba(10, 18, 30, 0.32);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.bottom-nav-transparent a {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.bottom-nav-transparent a.active {
+  color: #fff;
+}
+
 .bottom-nav a {
   display: flex;
   flex-direction: column;
@@ -437,6 +451,14 @@ button {
   min-width: 54px;
 }
 
+.home-toggle.top-left {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 18;
+  min-width: 54px;
+}
+
 .photo-strip {
   position: absolute;
   top: 112px;
@@ -715,6 +737,8 @@ button {
   display: flex;
   gap: 12px;
   padding: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .person-main {
@@ -795,6 +819,12 @@ button {
   border-radius: 13px;
   color: #6b7280;
   background: #f8fafc;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.soft-like.liked {
+  color: #ef4444;
+  background: #fee2e2;
 }
 
 .home-partner-card {
@@ -1982,4 +2012,281 @@ button {
   .detail-hero h1 {
     font-size: 23px;
   }
+}
+
+/* ── Achievement Wall ──────────────────────────────────────────────────── */
+
+.achievement-wall-page .filter-row.secondary button {
+  font-size: 11px;
+  padding: 4px 10px;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  padding-bottom: 24px;
+}
+
+.achievement-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.achievement-pin-img-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 12px rgba(44, 60, 74, 0.1);
+}
+
+.achievement-pin.unlocked .achievement-pin-img-wrap {
+  border-color: #22b573;
+  box-shadow: 0 4px 16px rgba(34, 181, 115, 0.25);
+}
+
+.achievement-pin-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.achievement-pin.locked .achievement-pin-img-wrap img {
+  filter: grayscale(100%) opacity(0.4);
+}
+
+.achievement-lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.35);
+  color: #fff;
+}
+
+.achievement-pin-name {
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 76px;
+}
+
+.achievement-pin.unlocked .achievement-pin-name {
+  color: #1f7a5c;
+  font-weight: 600;
+}
+
+.achievement-empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  padding: 32px 0;
+}
+
+/* Detail Sheet */
+.achievement-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.achievement-sheet {
+  width: 100%;
+  max-width: 390px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.achievement-sheet-img-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #22b573;
+  box-shadow: 0 6px 24px rgba(34, 181, 115, 0.3);
+}
+
+.achievement-sheet-img-wrap.locked {
+  border-color: #cbd5e1;
+  box-shadow: none;
+}
+
+.achievement-sheet-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.achievement-sheet-img-wrap.locked img {
+  filter: grayscale(100%) opacity(0.4);
+}
+
+.achievement-lock-overlay.large {
+  font-size: 28px;
+}
+
+.achievement-sheet-meta {
+  text-align: center;
+}
+
+.achievement-code {
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: Consolas, monospace;
+}
+
+.achievement-sheet-meta h2 {
+  font-size: 20px;
+  color: #1f2937;
+  margin: 4px 0;
+}
+
+.achievement-unlocked-tag {
+  font-size: 12px;
+  color: #22b573;
+  font-weight: 600;
+  margin: 2px 0 8px;
+}
+
+.achievement-condition {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 8px;
+}
+
+.achievement-humor {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.achievement-sheet-close {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Routes Page preview row */
+.achievement-preview-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.achievement-preview-row::-webkit-scrollbar { display: none; }
+
+.achievement-preview-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.achievement-preview-pin img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #22b573;
+  box-shadow: 0 2px 8px rgba(34, 181, 115, 0.2);
+}
+
+.achievement-preview-pin span {
+  font-size: 10px;
+  color: #475569;
+  text-align: center;
+  max-width: 52px;
+}
+
+.achievement-preview-more {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  text-align: center;
+}
+
+.achievement-empty-hint {
+  font-size: 12px;
+  color: #94a3b8;
+  flex: 1;
+}
+
+/* MyProfilePage entry */
+.profile-achievement-entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(226, 232, 240, 0.86);
+  border-radius: 16px;
+  color: inherit;
+}
+
+.profile-achievement-entry svg {
+  color: #22b573;
+  flex-shrink: 0;
+}
+
+.profile-achievement-entry div {
+  flex: 1;
+}
+
+.profile-achievement-entry strong {
+  display: block;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.profile-achievement-entry span {
+  font-size: 12px;
+  color: #78869a;
+}
+
+.entry-arrow {
+  color: #94a3b8;
+  font-size: 16px;
 }
