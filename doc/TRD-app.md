@@ -231,98 +231,15 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 ---
 
-## 4. 底部导航
+## 4. 页面设计与交互流程
 
-```
-┌──────────────────────────────────────────┐
-│  Tab1          Tab2          Tab3        │
-│  📍 攻略市场   💘 发现      💬 消息     │
-│  (路线攻略)   (滑动匹配)   (问答聊天)   │
-└──────────────────────────────────────────┘
-```
-
-| Tab | 路由 | 页面 | 图标 |
-|-----|------|------|------|
-| 1 | `/guides` | GuideListPage | Icons.explore |
-| 2 | `/discover` | DiscoverPage | Icons.favorite_border |
-| 3 | `/chats` | ChatListPage | Icons.chat_bubble_outline |
+> 📐 完整页面设计、交互流程、视觉规范已移至 [design.md](./design.md)
 
 ---
 
-## 5. 核心交互流程
+## 5. 状态管理设计
 
-### 5.1 滑动匹配卡片状态机
-
-```
-NORMAL ──拖拽──→ DRAGGING
-                    ├── 释放(左偏移>阈值) → SWIPING_LEFT  → 动画飞出 → 下一张
-                    ├── 释放(右偏移>阈值) → SWIPING_RIGHT → 动画飞出 → 检查匹配
-                    ├── 释放(上偏移>阈值) → SWIPING_UP    → 动画飞出 → 超级喜欢
-                    └── 释放(偏移<阈值)  → NORMAL (回弹)
-
-SWIPING_RIGHT + 对方已喜欢 → MATCHED (弹出匹配成功Dialog)
-
-卡片耗尽 → EMPTY (展示"今日已无更多"空状态)
-```
-
-### 5.2 破冰问答流程
-
-```
-┌─────────────────────────────────────────┐
-│  匹配成功 → 弹出 MatchDialog             │
-│    ├─ "立即答题" → IcebreakAnswerPage    │
-│    │   ├─ 展示3道问题，逐个/分页填写      │
-│    │   ├─ 全部填写 → 提交（不可修改）      │
-│    │   └─ 等待对方...                     │
-│    │                                       │
-│    ├─ 对方也提交 → 收到 Push + Socket通知  │
-│    │   └─ IcebreakResultPage               │
-│    │       ├─ 答案对比展示（你的 vs 对方的）│
-│    │       └─ 打分 ⭐1-5                   │
-│    │                                       │
-│    └─ 双方打分完成 → 结果通知              │
-│        ├─ 通过 → 跳转到 ChatDetailPage     │
-│        └─ 未通过 → Toast + 回到发现页      │
-└─────────────────────────────────────────┘
-```
-
-### 5.3 攻略购买流程
-
-```
-攻略列表 → 点击 → GuideDetailPage
-  ├─ price = 0 → 完整展示内容
-  └─ price > 0 → 显示预览（截断内容 + 模糊图片）
-      ├─ 已购买 → 完整展示
-      └─ 未购买 → 底部显示 "购买 - X积分"
-          ├─ 点击 → 积分检查
-          │   ├─ 不足 → AlertDialog "积分不足，去签到?"
-          │   │   ├─ 确认 → DailyCheckin → 刷新积分
-          │   │   └─ 取消 → 返回
-          │   └─ 足够 → 确认弹窗 → 调用 purchase API
-          │       ├─ 成功 → 内容解锁 + 积分刷新
-          │       └─ 失败 → Toast 错误信息
-          └─ 24h内 → 显示"退款"按钮
-```
-
-### 5.4 GPS 打卡流程
-
-```
-打开 CheckinPage → 获取当前位置
-  ├─ 加载附近打卡点（GET /checkin/nearby）
-  ├─ 展示打卡点卡片（距离排序）
-  ├─ 选择打卡点
-  │   ├─ 距离 > 100m → Toast "请靠近打卡点（当前距离 Xm）"
-  │   └─ 距离 ≤ 100m → 显示打卡按钮
-  │       ├─ 拍照/选照片（可选）
-  │       └─ 点击打卡 → 提交 → 成功 + 积分动画
-  └─ 双人打卡 ─ 选择同伴 → 双方 GPS ≤ 20m → 提交
-```
-
----
-
-## 6. 状态管理设计
-
-### 6.1 认证 Provider
+### 5.1 认证 Provider
 
 ```dart
 @freezed
@@ -338,7 +255,7 @@ final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
 });
 ```
 
-### 6.2 匹配 Provider
+### 5.2 匹配 Provider
 
 ```dart
 @freezed
@@ -366,7 +283,7 @@ class MatchNotifier extends StateNotifier<MatchState> {
 }
 ```
 
-### 6.3 聊天 Provider
+### 5.3 聊天 Provider
 
 ```dart
 final chatProvider = StateNotifierProvider<ChatNotifier, ChatState>((ref) {
@@ -392,7 +309,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
 }
 ```
 
-### 6.4 Socket Provider
+### 5.4 Socket Provider
 
 ```dart
 final socketProvider = Provider<SocketClient>((ref) {
@@ -404,7 +321,7 @@ final socketProvider = Provider<SocketClient>((ref) {
 
 ---
 
-## 7. 数据模型（示例）
+## 6. 数据模型（示例）
 
 ```dart
 // lib/data/models/user.dart
@@ -460,7 +377,7 @@ class MatchCard with _$MatchCard {
 
 ---
 
-## 8. 缓存与离线策略
+## 7. 缓存与离线策略
 
 | 数据 | 方式 | TTL | 说明 |
 |------|------|-----|------|
@@ -474,7 +391,7 @@ class MatchCard with _$MatchCard {
 
 ---
 
-## 9. 错误处理
+## 8. 错误处理
 
 ```dart
 // lib/core/utils/error_messages.dart
@@ -505,7 +422,7 @@ String userFacingMessage(int code) => switch (code) {
 
 ---
 
-## 10. 性能要求
+## 9. 性能要求
 
 | 指标 | 目标 |
 |------|------|
@@ -520,7 +437,7 @@ String userFacingMessage(int code) => switch (code) {
 
 ---
 
-## 11. 安全要求
+## 10. 安全要求
 
 | 要求 | 实现 |
 |------|------|
