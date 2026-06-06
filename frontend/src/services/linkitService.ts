@@ -18,6 +18,8 @@ import type {
 
 export type SwipeAction = "like" | "dislike" | "skip"
 export type JoinPartnerAction = "join" | "request"
+export type PartnerCategory = "all" | "study" | "sport" | "life" | "interest"
+export type MessageCategory = "all" | "partners" | "routes" | "relationship" | "system"
 
 export type SwipeActionPayload = {
   profileId: string
@@ -27,6 +29,15 @@ export type SwipeActionPayload = {
 export type PartnerActionPayload = {
   postId: string
   action: JoinPartnerAction
+}
+
+export type CreatePartnerPostPayload = {
+  title: string
+  type: Exclude<PartnerCategory, "all">
+  time: string
+  place: string
+  capacity: number
+  note: string
 }
 
 export type CheckInPayload = {
@@ -48,7 +59,8 @@ export type DiscoverService = {
 }
 
 export type PartnerService = {
-  listPosts(): Promise<PartnerPost[]>
+  listPosts(category?: PartnerCategory): Promise<PartnerPost[]>
+  createPost(payload: CreatePartnerPostPayload): Promise<PartnerPost>
   submitAction(payload: PartnerActionPayload): Promise<{ ok: true }>
 }
 
@@ -61,7 +73,7 @@ export type RouteService = {
 }
 
 export type MessageService = {
-  listChats(): Promise<ChatItem[]>
+  listChats(category?: MessageCategory): Promise<ChatItem[]>
   getChat(chatId: string): Promise<ChatItem | undefined>
   sendMessage(payload: SendMessagePayload): Promise<{ ok: true }>
 }
@@ -81,6 +93,22 @@ export type LinkitService = {
 
 const resolveMock = async <T>(value: T): Promise<T> => value
 
+const partnerCategoryPostIds: Record<PartnerCategory, string[]> = {
+  all: partnerPosts.map((post) => post.id),
+  study: ["library-night"],
+  sport: ["badminton"],
+  life: ["library-night", "sipaifang-walk"],
+  interest: ["sipaifang-walk"]
+}
+
+const messageCategoryChatIds: Record<MessageCategory, string[]> = {
+  all: chats.map((chat) => chat.id),
+  partners: ["xiaocheng"],
+  routes: ["badminton-team"],
+  relationship: [],
+  system: ["safety"]
+}
+
 export const mockLinkitService: LinkitService = {
   discover: {
     listProfiles: () => resolveMock(discoverProfiles),
@@ -88,7 +116,18 @@ export const mockLinkitService: LinkitService = {
     recordSwipe: () => resolveMock({ ok: true })
   },
   partners: {
-    listPosts: () => resolveMock(partnerPosts),
+    listPosts: (category = "all") => resolveMock(partnerPosts.filter((post) => partnerCategoryPostIds[category].includes(post.id))),
+    createPost: (payload) => resolveMock({
+      id: `mock-${Date.now()}`,
+      title: payload.title,
+      status: "招募中",
+      time: payload.time,
+      place: payload.place,
+      joined: 1,
+      total: payload.capacity,
+      note: payload.note,
+      tone: payload.type === "sport" ? "purple" : payload.type === "life" ? "orange" : "green"
+    }),
     submitAction: () => resolveMock({ ok: true })
   },
   routes: {
@@ -99,7 +138,7 @@ export const mockLinkitService: LinkitService = {
     checkIn: () => resolveMock({ ok: true })
   },
   messages: {
-    listChats: () => resolveMock(chats),
+    listChats: (category = "all") => resolveMock(chats.filter((chat) => messageCategoryChatIds[category].includes(chat.id))),
     getChat: (chatId) => resolveMock(chats.find((chat) => chat.id === chatId)),
     sendMessage: () => resolveMock({ ok: true })
   },

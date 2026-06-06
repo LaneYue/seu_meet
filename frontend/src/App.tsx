@@ -6,6 +6,7 @@ import { HomeFeedPage } from "./pages/HomeFeedPage"
 import { MessagesPage } from "./pages/MessagesPage"
 import { MyProfileEditPage } from "./pages/MyProfileEditPage"
 import { MyProfilePage } from "./pages/MyProfilePage"
+import { PartnerPostPage } from "./pages/PartnerPostPage"
 import { PartnerSquarePage } from "./pages/PartnerSquarePage"
 import { ProfileDetailPage } from "./pages/ProfileDetailPage"
 import { RouteDetailPage } from "./pages/RouteDetailPage"
@@ -36,6 +37,8 @@ export default function App() {
         <Route path="/me/edit" element={<MyProfileEditPage />} />
         <Route path="/swipe" element={<SwipePage />} />
         <Route path="/partners" element={<PartnerSquarePage />} />
+        <Route path="/partners/new" element={<PartnerPostPage />} />
+        <Route path="/partners/:category" element={<PartnerSquarePage />} />
         <Route path="/routes" element={<RoutesPage />} />
         <Route path="/routes/:routeId" element={<RouteDetailPage />} />
         <Route path="/routes/:routeId/checkin" element={<RouteCheckInPage />} />
@@ -45,6 +48,7 @@ export default function App() {
         <Route path="/safety" element={<SafetyCenterPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/chats" element={<MessagesPage />} />
+        <Route path="/chats/category/:category" element={<MessagesPage />} />
         <Route path="/chats/:chatId" element={<ChatDetailPage />} />
         <Route path="/chats/:chatId/confirm-activity" element={<ChatConfirmActivityPage />} />
         <Route path="/chats/:chatId/report" element={<ChatReportPage />} />

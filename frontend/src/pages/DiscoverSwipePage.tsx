@@ -1,5 +1,5 @@
 import { useMemo, useState, type PointerEvent } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { StatusBar } from "../components/AppShell"
 import { PublicProfileCard } from "../components/PublicProfileCard"
 import { discoverProfiles } from "../data/mock/linkit"
@@ -132,15 +132,9 @@ export function DiscoverSwipePage() {
             style={{
               transform: `translate3d(${currentMotion.x}px, ${currentMotion.y}px, 0) rotate(${currentMotion.rotate}deg)`
             }}
-            topSlot={
-              <div className="discover-card-top">
-                <span />
-                <Link to="/home/feed" className="home-toggle">主页</Link>
-                <span />
-              </div>
-            }
           />
         </div>
+        <button className="home-toggle standalone" onClick={() => navigate("/home/feed")} type="button">主页</button>
         <p className="gesture-hint fullscreen">{gestureLabel}</p>
       </section>
     </div>
