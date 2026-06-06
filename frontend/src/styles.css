@@ -414,8 +414,7 @@ button {
   gap: 10px;
 }
 
-.discover-card-top button,
-.home-toggle {
+.discover-card-top button {
   display: inline-flex;
   gap: 5px;
   align-items: center;
@@ -429,31 +428,6 @@ button {
 
 .discover-card-top button:first-child {
   justify-content: flex-start;
-}
-
-.home-toggle {
-  padding: 7px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.22);
-  backdrop-filter: blur(12px);
-}
-
-.home-toggle.standalone {
-  position: absolute;
-  top: 52px;
-  left: 50%;
-  z-index: 18;
-  transform: translateX(-50%);
-  min-width: 54px;
-}
-
-.home-toggle.top-left {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 18;
-  min-width: 54px;
 }
 
 .photo-strip {
