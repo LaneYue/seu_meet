@@ -1,23 +1,21 @@
 import type { ReactNode } from "react"
-import { Home, Map, MessageCircle } from "lucide-react"
+import { Home, Map, User } from "lucide-react"
 import { NavLink } from "react-router-dom"
+import { chats } from "../data/mock/linkit"
 
 export function PhoneFrame({ children }: { children: ReactNode }) {
   return <main className="desktop-stage"><section className="phone-shell">{children}</section></main>
 }
 
 export function StatusBar() {
-  return (
-    <div className="status-bar">
-      <span>9:41</span>
-      <span className="signal">▮▮▮ 5G ▰</span>
-    </div>
-  )
+  return <div className="status-bar" />
 }
 
-export function BottomNav() {
+export function BottomNav({ transparent }: { transparent?: boolean }) {
+  const hasUnread = chats.some((c) => (c.unread ?? 0) > 0)
+
   return (
-    <nav className="bottom-nav" aria-label="底部导航">
+    <nav className={`bottom-nav${transparent ? " bottom-nav-transparent" : ""}`} aria-label="底部导航">
       <NavLink to="/routes" className={({ isActive }) => (isActive ? "active" : "")}>
         <Map size={20} />
         <span>路线</span>
@@ -26,12 +24,12 @@ export function BottomNav() {
         <Home size={20} />
         <span>同行</span>
       </NavLink>
-      <NavLink to="/chats" className={({ isActive }) => (isActive ? "active" : "")}>
+      <NavLink to="/me" className={({ isActive }) => (isActive ? "active" : "")}>
         <span className="nav-badge-wrap">
-          <MessageCircle size={20} />
-          <i />
+          <User size={20} />
+          {hasUnread && <i />}
         </span>
-        <span>消息</span>
+        <span>我的</span>
       </NavLink>
     </nav>
   )
@@ -51,9 +49,9 @@ export function Pill({ children, tone = "green" }: { children: ReactNode; tone?:
   return <span className={`pill ${tone}`}>{children}</span>
 }
 
-export function Avatar({ label, gradient }: { label: string; gradient?: string }) {
+export function Avatar({ label, gradient, size }: { label: string; gradient?: string; size?: "lg" }) {
   return (
-    <span className="avatar" style={{ background: gradient ?? "linear-gradient(135deg,#d1fae5,#bfdbfe)" }}>
+    <span className={`avatar${size === "lg" ? " avatar-lg" : ""}`} style={{ background: gradient ?? "linear-gradient(135deg,#d1fae5,#bfdbfe)" }}>
       {label}
     </span>
   )

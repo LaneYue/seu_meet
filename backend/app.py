@@ -8,18 +8,20 @@ import socketio as sio_module
 from config import settings
 from database import engine, Base
 from ws.handlers import sio
-from routers import auth, users, guides, match, questions, chat, points, plaza
+from routers import auth, users, guides, match, questions, chat, points, achievements, plaza
 from routers.routes_campus import router as routes_router
 
-# ── 确保所有模型表被创建 ──
-import models.user
-import models.guide
-import models.purchase
-import models.match
-import models.question
-import models.chat
-import models.plaza
-import models.route
+# 确保所有模型被 SQLAlchemy 感知，create_all 才能建表
+import models.user         # noqa
+import models.guide        # noqa
+import models.purchase     # noqa
+import models.match        # noqa
+import models.question     # noqa
+import models.chat         # noqa
+import models.plaza        # noqa
+import models.route        # noqa
+import models.achievement  # noqa
+import models.ledger       # noqa
 
 # ── 创建数据库表 ──
 Base.metadata.create_all(bind=engine)
@@ -63,6 +65,7 @@ app.include_router(match.router, prefix="/api/v1/match", tags=["Match"])
 app.include_router(questions.router, prefix="/api/v1/questions", tags=["Questions"])
 app.include_router(chat.router, prefix="/api/v1/chat", tags=["Chat"])
 app.include_router(points.router, prefix="/api/v1/points", tags=["Points"])
+app.include_router(achievements.router, prefix="/api/v1/achievements", tags=["Achievements"])
 app.include_router(plaza.router, prefix="/api/v1/plaza", tags=["Plaza"])
 app.include_router(routes_router, prefix="/api/v1", tags=["Routes"])
 

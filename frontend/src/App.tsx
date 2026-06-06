@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PhoneFrame } from "./components/AppShell"
+import { AchievementWallPage } from "./pages/AchievementWallPage"
 import { ChatDetailPage } from "./pages/ChatDetailPage"
 import { DiscoverSwipePage } from "./pages/DiscoverSwipePage"
 import { HomeFeedPage } from "./pages/HomeFeedPage"
@@ -8,8 +9,11 @@ import { MyProfileEditPage } from "./pages/MyProfileEditPage"
 import { MyProfilePage } from "./pages/MyProfilePage"
 import { PartnerPostPage } from "./pages/PartnerPostPage"
 import { PartnerSquarePage } from "./pages/PartnerSquarePage"
+import { PointsPage } from "./pages/PointsPage"
 import { ProfileDetailPage } from "./pages/ProfileDetailPage"
+import { RedeemPage } from "./pages/RedeemPage"
 import { RouteDetailPage } from "./pages/RouteDetailPage"
+import { RoutePublishPage } from "./pages/RoutePublishPage"
 import { RoutesPage } from "./pages/RoutesPage"
 import { SwipePage } from "./pages/SwipePage"
 import {
@@ -40,11 +44,15 @@ export default function App() {
         <Route path="/partners/new" element={<PartnerPostPage />} />
         <Route path="/partners/:category" element={<PartnerSquarePage />} />
         <Route path="/routes" element={<RoutesPage />} />
+        <Route path="/routes/publish" element={<RoutePublishPage />} />
         <Route path="/routes/:routeId" element={<RouteDetailPage />} />
         <Route path="/routes/:routeId/checkin" element={<RouteCheckInPage />} />
         <Route path="/routes/:routeId/invite" element={<RouteInvitePage />} />
         <Route path="/badges" element={<BadgeWallPage />} />
         <Route path="/badges/apply" element={<BadgeApplyPage />} />
+        <Route path="/achievements" element={<AchievementWallPage />} />
+        <Route path="/achievements/:code/redeem" element={<RedeemPage />} />
+        <Route path="/points" element={<PointsPage />} />
         <Route path="/safety" element={<SafetyCenterPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/chats" element={<MessagesPage />} />

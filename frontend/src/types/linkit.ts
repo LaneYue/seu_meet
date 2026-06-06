@@ -77,3 +77,17 @@ export type BadgeItem = {
   level: string
   icon: LucideIcon
 }
+
+export type AchievementCampus = "S" | "J" | "D" | "C"
+export type AchievementCategory = "L" | "I" | "M" | "F" | "H"
+
+export type Achievement = {
+  code: string            // e.g. "SL01"
+  name: string            // e.g. "老图钉子户"
+  campus: AchievementCampus
+  category: AchievementCategory
+  conditionDesc: string
+  humorDesc: string
+  unlocked: boolean
+  unlockedAt?: string
+}

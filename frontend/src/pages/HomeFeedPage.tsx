@@ -1,9 +1,22 @@
 import { Bell, BookOpen, ChevronRight, Coffee, Compass, Dumbbell, Heart, Map, Search, Sparkles, Users } from "lucide-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Avatar, Pill, TabLayout } from "../components/AppShell"
 import { partnerPosts, people, routes } from "../data/mock/linkit"
 
 export function HomeFeedPage() {
+  const [liked, setLiked] = useState<Set<string>>(new Set())
+
+  const toggleLike = (id: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setLiked((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
   const quick = [
     { title: "学习搭子", desc: "自习 · 备考 · 课程", icon: BookOpen, tone: "mint" },
     { title: "饭搭子", desc: "午饭 · 探店 · 分享", icon: Coffee, tone: "peach" },
@@ -37,19 +50,6 @@ export function HomeFeedPage() {
           </label>
         </header>
 
-        <section className="quick-grid">
-          {quick.map((item) => {
-            const Icon = item.icon
-            return (
-              <Link to={item.title.includes("路线") ? "/routes" : "/partners"} className={`quick-card ${item.tone}`} key={item.title}>
-                <span><Icon size={22} /></span>
-                <strong>{item.title}</strong>
-                <small>{item.desc}</small>
-              </Link>
-            )
-          })}
-        </section>
-
         <section className="section-block">
           <div className="section-title">
             <h2>今日推荐</h2>
@@ -57,7 +57,7 @@ export function HomeFeedPage() {
           </div>
           <div className="people-list">
             {people.map((person) => (
-              <article className="person-card" key={person.id}>
+              <Link className="person-card" to={`/home/profile/${person.id}`} key={person.id}>
                 <Avatar label={person.avatar} gradient={person.color} />
                 <div className="person-main">
                   <div className="card-line">
@@ -70,12 +70,29 @@ export function HomeFeedPage() {
                   </div>
                   <p className="intro">{person.intro}</p>
                 </div>
-                <button className="soft-like" aria-label="想认识">
+                <button
+                  className={`soft-like ${liked.has(person.id) ? "liked" : ""}`}
+                  aria-label="想认识"
+                  onClick={(e) => toggleLike(person.id, e)}
+                >
                   <Heart size={18} />
                 </button>
-              </article>
+              </Link>
             ))}
           </div>
+        </section>
+
+        <section className="quick-grid">
+          {quick.map((item) => {
+            const Icon = item.icon
+            return (
+              <Link to={item.title.includes("路线") ? "/routes" : "/partners"} className={`quick-card ${item.tone}`} key={item.title}>
+                <span><Icon size={22} /></span>
+                <strong>{item.title}</strong>
+                <small>{item.desc}</small>
+              </Link>
+            )
+          })}
         </section>
 
         <section className="section-block">
