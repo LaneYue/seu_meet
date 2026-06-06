@@ -345,9 +345,6 @@ button {
 
 .swipe-motion-card {
     inset: 0;
-    border-radius: 28px;
-    border: 0;
-    box-shadow: none;
 }
 
 .swipe-motion-card.dragging {
@@ -357,6 +354,22 @@ button {
 
 .swipe-motion-card.exiting {
     transition: transform 260ms cubic-bezier(0.22, 0.88, 0.34, 1);
+}
+
+.swipe-motion-card.animating-inset {
+    transition:
+        inset 300ms ease,
+        border-radius 300ms ease,
+        box-shadow 300ms ease,
+        border 300ms ease !important;
+}
+
+.glass-card-dark {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px;
+    backdrop-filter: blur(12px);
 }
 
 .profile-cover {

@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { BookOpen, CheckCircle2, ChevronLeft, ShieldCheck } from "lucide-react";
 import { BottomNav } from "../components/AppShell";
 import { PublicProfileCard } from "../components/PublicProfileCard";
 import { discoverProfiles } from "../data/mock/linkit";
@@ -18,7 +19,6 @@ type ExitState = {
   x: number;
   y: number;
   rotate: number;
-  detailTarget?: string;
 };
 
 const swipeThreshold = 82;
@@ -36,6 +36,20 @@ export function DiscoverSwipePage() {
     sessionId: string;
   } | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Card expansion states
+  const [animPhase, setAnimPhase] = useState<
+    "idle" | "expanding" | "expanded" | "collapsing"
+  >("idle");
+  const [collapsePhase, setCollapsePhase] = useState<
+    "start" | "animating"
+  >("start");
+  const expandedRef = useRef<HTMLDivElement>(null);
+  const collapseDragRef = useRef<{
+    startY: number;
+    moved: boolean;
+  } | null>(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,13 +59,11 @@ export function DiscoverSwipePage() {
         if (list.length > 0) {
           setCards(list);
         } else {
-          // 后端无数据时用 mock 兜底
           setCards(discoverProfiles);
         }
         setLoading(false);
       })
       .catch(() => {
-        // 后端不可达时用 mock 兜底
         setCards(discoverProfiles);
         setLoading(false);
       });
@@ -76,12 +88,12 @@ export function DiscoverSwipePage() {
     16 - Math.hypot(currentMotion.x, currentMotion.y) / 18,
   );
 
+  // ── Swipe finish (left/right/down) ──────────────────────────────
+
   const finishToNext = () => {
-    const detailTarget = exit?.detailTarget;
     setExit(null);
     setDrag(null);
     setActiveIndex((value) => (value + 1) % Math.max(cards.length, 1));
-    if (detailTarget) navigate(detailTarget);
   };
 
   const recordSwipe = async (action: "like" | "dislike" | "skip") => {
@@ -103,8 +115,10 @@ export function DiscoverSwipePage() {
     }
   };
 
+  // ── Pointer handling for card swiping ───────────────────────────
+
   const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
-    if (exit) return;
+    if (exit || animPhase !== "idle") return;
     event.currentTarget.setPointerCapture(event.pointerId);
     setDrag({
       startX: event.clientX,
@@ -116,7 +130,7 @@ export function DiscoverSwipePage() {
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (!drag?.dragging || exit) return;
+    if (!drag?.dragging || exit || animPhase !== "idle") return;
     const x = event.clientX - drag.startX;
     const y = event.clientY - drag.startY;
     setDrag({ ...drag, x, y });
@@ -131,7 +145,7 @@ export function DiscoverSwipePage() {
   };
 
   const handlePointerUp = (event: PointerEvent<HTMLElement>) => {
-    if (!drag || exit) return;
+    if (!drag || exit || animPhase !== "idle") return;
     event.currentTarget.releasePointerCapture(event.pointerId);
 
     const absX = Math.abs(drag.x);
@@ -154,13 +168,11 @@ export function DiscoverSwipePage() {
     }
 
     if (drag.y < 0) {
-      setGestureLabel("进入名片详情");
-      setExit({
-        x: drag.x * 0.2,
-        y: -620,
-        rotate: 0,
-        detailTarget: `/home/profile/${profile.id}`,
-      });
+      // Up swipe → expand card in-place (no navigation)
+      setGestureLabel("");
+      setDrag(null);
+      // Let React commit the drag-snap to inset:5% first
+      setTimeout(() => setAnimPhase("expanding"), 0);
       return;
     }
 
@@ -170,8 +182,61 @@ export function DiscoverSwipePage() {
   };
 
   const handlePointerCancel = () => {
-    if (!exit) setDrag(null);
+    if (!exit && animPhase === "idle") setDrag(null);
   };
+
+  // ── Card expansion / collapse ───────────────────────────────────
+
+  const handleCardTransitionEnd = () => {
+    if (animPhase === "expanding") {
+      setAnimPhase("expanded");
+    } else if (animPhase === "collapsing" && collapsePhase === "animating") {
+      setAnimPhase("idle");
+      setCollapsePhase("start");
+    }
+  };
+
+  const handleCollapse = () => {
+    setAnimPhase("collapsing");
+    setCollapsePhase("start");
+  };
+
+  // Two-step collapse: render card at inset:0, then next frame add inset:5%
+  useEffect(() => {
+    if (animPhase === "collapsing" && collapsePhase === "start") {
+      requestAnimationFrame(() => setCollapsePhase("animating"));
+    }
+  }, [animPhase, collapsePhase]);
+
+  // ── Swipe-down-to-collapse on expanded view ─────────────────────
+
+  const handleExpandedPointerDown = (e: PointerEvent) => {
+    if (expandedRef.current && expandedRef.current.scrollTop === 0) {
+      collapseDragRef.current = { startY: e.clientY, moved: false };
+    }
+  };
+
+  const handleExpandedPointerMove = (e: PointerEvent) => {
+    const dragState = collapseDragRef.current;
+    if (!dragState || expandedRef.current?.scrollTop !== 0) return;
+    const dy = e.clientY - dragState.startY;
+    if (dy > 60) {
+      dragState.moved = true;
+      collapseDragRef.current = null;
+      handleCollapse();
+    }
+  };
+
+  const handleExpandedPointerUp = () => {
+    collapseDragRef.current = null;
+  };
+
+  // ── Derived flags ───────────────────────────────────────────────
+
+  const isAnimating =
+    animPhase === "expanding" || animPhase === "collapsing";
+
+  // ── Loading state ───────────────────────────────────────────────
 
   if (loading) {
     return (
@@ -183,6 +248,8 @@ export function DiscoverSwipePage() {
       </div>
     );
   }
+
+  // ── No more profiles ────────────────────────────────────────────
 
   if (!profile) {
     return (
@@ -213,65 +280,211 @@ export function DiscoverSwipePage() {
     );
   }
 
+  // ── Main render ─────────────────────────────────────────────────
+
   return (
     <div className="app-screen discover-fullscreen with-tabbar">
       <section className="discover-page fullscreen">
-        <div className="discover-stack fullscreen" aria-label="同行推送名片">
-          {thirdProfile && (
-            <article
-              data-stack-layer="2"
-              className="discover-card"
-              aria-hidden="true"
+        {/* ── Card stack (hidden when fully expanded) ── */}
+        {animPhase !== "expanded" && (
+          <div className="discover-stack fullscreen" aria-label="同行推送名片">
+            {!isAnimating && thirdProfile && (
+              <article
+                data-stack-layer="2"
+                className="discover-card"
+                aria-hidden="true"
+                style={{
+                  inset: "5%",
+                  transform: "scale(0.91) translateY(28px)",
+                  opacity: 0.32,
+                }}
+              >
+                <img
+                  className="w-full h-full object-cover block"
+                  src={thirdProfile.photos[0]}
+                  alt=""
+                />
+              </article>
+            )}
+            {!isAnimating && nextProfile && (
+              <article
+                data-stack-layer="1"
+                className="discover-card"
+                aria-hidden="true"
+                style={{
+                  inset: "5%",
+                  transform: `scale(${nextScale}) translateY(${nextTranslate}px)`,
+                  opacity: 0.88,
+                  transition: "transform 220ms ease, opacity 220ms ease",
+                }}
+              >
+                <img
+                  className="w-full h-full object-cover block"
+                  src={nextProfile.photos[0]}
+                  alt=""
+                />
+              </article>
+            )}
+            <PublicProfileCard
+              profile={profile}
+              data-stack-layer="0"
+              className={`swipe-motion-card ${!isAnimating ? "!inset-x-[5%] !inset-y-[5%]" : ""} ${drag ? "dragging" : ""} ${exit ? "exiting" : ""} ${isAnimating ? "animating-inset" : ""}`}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+              onTransitionEnd={
+                isAnimating
+                  ? handleCardTransitionEnd
+                  : exit
+                    ? finishToNext
+                    : undefined
+              }
               style={{
-                inset: "5%",
-                transform: "scale(0.91) translateY(28px)",
-                opacity: 0.32,
+                transform:
+                  exit || drag
+                    ? `translate3d(${currentMotion.x}px, ${currentMotion.y}px, 0) rotate(${currentMotion.rotate}deg)`
+                    : undefined,
+                ...(animPhase === "expanding"
+                  ? { inset: 0, borderRadius: 0, boxShadow: "none", border: "none" }
+                  : {}),
+                ...(animPhase === "collapsing" && collapsePhase === "start"
+                  ? { inset: 0, borderRadius: 0, boxShadow: "none", border: "none" }
+                  : {}),
               }}
-            >
-              <img
-                className="w-full h-full object-cover block"
-                src={thirdProfile.photos[0]}
-                alt=""
-              />
-            </article>
-          )}
-          {nextProfile && (
-            <article
-              data-stack-layer="1"
-              className="discover-card"
-              aria-hidden="true"
-              style={{
-                inset: "5%",
-                transform: `scale(${nextScale}) translateY(${nextTranslate}px)`,
-                opacity: 0.88,
-                transition: "transform 220ms ease, opacity 220ms ease",
-              }}
-            >
-              <img
-                className="w-full h-full object-cover block"
-                src={nextProfile.photos[0]}
-                alt=""
-              />
-            </article>
-          )}
-          <PublicProfileCard
-            profile={profile}
-            data-stack-layer="0"
-            className={`swipe-motion-card !inset-x-[5%] !inset-y-[5%] ${drag ? "dragging" : ""} ${exit ? "exiting" : ""}`}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerCancel}
-            onTransitionEnd={exit ? finishToNext : undefined}
-            style={{
-              transform: `translate3d(${currentMotion.x}px, ${currentMotion.y}px, 0) rotate(${currentMotion.rotate}deg)`,
-            }}
-          />
-        </div>
-        <p className="gesture-hint fullscreen">{gestureLabel}</p>
+            />
+          </div>
+        )}
+
+        {/* ── Gesture hint ── */}
+        {gestureLabel && animPhase === "idle" && (
+          <p className="gesture-hint fullscreen">{gestureLabel}</p>
+        )}
       </section>
 
-      {/* 匹配成功弹窗 */}
+      {/* ── Expanded detail view (dark theme) ──────────────────── */}
+      {animPhase === "expanded" && profile && (
+        <div
+          ref={expandedRef}
+          className="absolute inset-0 z-10 flex flex-col overflow-y-auto bg-[#07111f]"
+          style={{ scrollbarWidth: "none" }}
+          onPointerDown={handleExpandedPointerDown}
+          onPointerMove={handleExpandedPointerMove}
+          onPointerUp={handleExpandedPointerUp}
+          onPointerCancel={handleExpandedPointerUp}
+        >
+          {/* Top bar */}
+          <div className="sticky top-0 z-20 flex items-center justify-between px-4 pt-12 pb-3 pointer-events-none bg-gradient-to-b from-[#07111f] to-transparent">
+            <button
+              onClick={handleCollapse}
+              className="pointer-events-auto w-9 h-9 inline-flex items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-sm"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          </div>
+
+          {/* Hero — same photo as the card cover */}
+          <div className="relative -mt-14" style={{ minHeight: "45vh" }}>
+            <img
+              className="absolute inset-0 w-full h-full object-cover"
+              src={profile.photos[0]}
+              alt=""
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80" />
+            <div className="absolute bottom-6 left-4 right-4 text-white">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#dcfce7] text-[#065f46]">
+                <CheckCircle2 size={12} />
+                {profile.verified}
+              </span>
+              <div className="flex items-end gap-2 mt-2">
+                <h1 className="text-3xl font-bold leading-none">
+                  {profile.name}
+                </h1>
+                <span className="text-base opacity-80 pb-0.5">
+                  {profile.gender} {profile.age}
+                </span>
+              </div>
+              <p className="text-sm opacity-80 mt-1 flex items-center gap-1">
+                <BookOpen size={14} />
+                {profile.school}
+              </p>
+            </div>
+          </div>
+
+          {/* Content sections */}
+          <div className="px-4 pb-28 -mt-4 space-y-3 relative z-10">
+            {/* 个人介绍 */}
+            <section className="glass-card-dark">
+              <h2 className="text-base font-bold mb-2 text-white/90">
+                个人介绍
+              </h2>
+              <p className="text-sm text-white/70 leading-relaxed">
+                {profile.post}
+              </p>
+            </section>
+
+            {/* 分享图片 */}
+            {profile.photos.length > 1 && (
+              <section className="glass-card-dark">
+                <h2 className="text-base font-bold mb-3 text-white/90">
+                  分享图片
+                </h2>
+                <div className="grid grid-cols-[1.2fr_0.8fr] gap-2">
+                  <img
+                    className="row-span-2 h-60 object-cover rounded-xl"
+                    src={profile.photos[0]}
+                    alt=""
+                  />
+                  {profile.photos.slice(1, 3).map((p) => (
+                    <img
+                      className="h-28 object-cover rounded-xl"
+                      src={p}
+                      alt=""
+                      key={p}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 爱好 */}
+            <section className="glass-card-dark">
+              <h2 className="text-base font-bold mb-3 text-white/90">爱好</h2>
+              <div className="flex flex-wrap gap-2">
+                {profile.interests.map((tag) => (
+                  <span
+                    className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-sm font-medium"
+                    key={tag}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* 安全提示 */}
+            <section className="bg-amber-900/20 border border-amber-600/30 rounded-xl p-3 flex gap-2 text-sm text-amber-200/80">
+              <ShieldCheck size={16} className="shrink-0 mt-0.5" />
+              <span>{profile.safety}</span>
+            </section>
+
+            {/* 操作按钮 */}
+            <div className="flex gap-3 pt-2">
+              <button className="flex-1 h-11 rounded-xl bg-white/10 text-white font-bold backdrop-blur-sm">
+                💬 发消息
+              </button>
+              <button
+                className="flex-1 h-11 rounded-xl bg-[#23866a] text-white font-bold"
+                onClick={handleCollapse}
+              >
+                返回推送
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── 匹配成功弹窗 ── */}
       {matchedUser && (
         <div className="modal-backdrop" onClick={() => setMatchedUser(null)}>
           <div className="modal-sheet" onClick={(e) => e.stopPropagation()}>
@@ -290,7 +503,8 @@ export function DiscoverSwipePage() {
         </div>
       )}
 
-      <BottomNav transparent />
+      {/* ── Bottom nav (hidden when expanded) ── */}
+      {animPhase !== "expanded" && <BottomNav transparent />}
     </div>
   );
 }
