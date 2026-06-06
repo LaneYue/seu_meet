@@ -56,9 +56,14 @@ npm run build
 ```text
 doc/          产品与技术文档
 pages/        视觉参考页面
-src/App.tsx   页面、路由和 Demo 数据
-src/styles.css 全局样式与移动端 UI
-src/main.tsx  React 入口
+frontend/src/App.tsx   路由入口
+frontend/src/components/  通用壳组件与基础 UI
+frontend/src/pages/    页面组件
+frontend/src/data/mock/ 前端 mock 数据
+frontend/src/services/ 后端服务接口与 mock 实现
+frontend/src/types/    核心业务类型
+frontend/src/styles.css 全局样式与移动端 UI
+frontend/src/main.tsx  React 入口
 ```
 
 ## 设计与安全边界
