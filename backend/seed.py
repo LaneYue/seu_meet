@@ -10,7 +10,9 @@ from models.user import User
 from models.guide import Guide
 from models.question import Question
 from models.achievement import Achievement
-from models.plaza import PlazaPost
+from models.plaza import PlazaPost, PlazaJoin
+from models.chat import ChatSession, Message
+from models.route import CampusRoute, RouteStep
 from models.ledger import RedeemOrder, PointLog
 from services.auth_service import hash_password
 
@@ -19,6 +21,31 @@ Base.metadata.create_all(bind=engine)
 db = SessionLocal()
 
 print("🌱 开始种子数据初始化...")
+
+# ────────────────────────────
+# 0. 演示用户 (213200000) — 打开 App 默认登录的用户
+# ────────────────────────────
+demo_user = User(
+    studentId="213200000",
+    realName="林岚",
+    idCardLast6="000000",
+    passwordHash=hash_password("123456"),
+    nickname="林岚",
+    college="信息学院",
+    major="信息工程",
+    grade="2024",
+    campus="jiulonghu",
+    gender="female",
+    tags=["自习", "摄影", "路线打卡", "咖啡"],
+    bio="最近想找一个可以一起自习、散步、探索校园路线的同行搭子。喜欢轻松聊天，也喜欢各自专注。",
+    creditScore=85,
+    points=130,
+)
+db.add(demo_user)
+db.commit()
+db.refresh(demo_user)
+demo_user_id = demo_user.id
+print(f"  ✅ 创建演示用户: {demo_user.nickname} ({demo_user.studentId})")
 
 # ────────────────────────────
 # 1. 种子用户 (20个)
@@ -115,6 +142,65 @@ for nickname, user in user_ids.items():
     user_ids[nickname] = user.id
 
 print(f"  ✅ 创建了 {len(users_data)} 个种子用户")
+
+# ────────────────────────────
+# 1.5 为演示用户创建聊天会话 + 消息
+# ────────────────────────────
+
+# 对话对象：思思、阿杰、阿东
+demo_chat_partners = [
+    {"nickname": "思思", "tag": "搭子请求",
+     "messages": [
+         ("other", "你好呀，我看到你也喜欢摄影和自习！"),
+         ("demo", "是的！最近经常去李文正图书馆三楼靠窗的位置"),
+         ("other", "我也常去！那边的光线特别好，拍出来的照片绝了"),
+         ("demo", "那可太巧了，下次可以约一起自习，还可以顺便交流摄影"),
+         ("other", "好呀，想和你一起交流摄影，顺便打卡图书馆里的几个机位"),
+     ],
+    },
+    {"nickname": "阿杰", "tag": "破冰完成",
+     "messages": [
+         ("other", "你是信息学院的？我也是计科的，一起组队打比赛不？"),
+         ("demo", "哈哈可以的！你主要做什么方向的？"),
+         ("other", "我比较喜欢做后端和系统设计，你们信息学院的课程应该偏硬件？"),
+         ("demo", "对，我们有不少嵌入式和大数据的选修课，可以互帮互助"),
+     ],
+    },
+    {"nickname": "阿东", "tag": "路线同行",
+     "messages": [
+         ("other", "看了你发的九龙湖骑行路线，太强了！一个人骑的吗？"),
+         ("demo", "嗯上次周末一个人去探路的，下次可以一起！"),
+         ("other", "必须的，我平时也喜欢骑行，周末约起"),
+     ],
+    },
+]
+
+for partner in demo_chat_partners:
+    partner_user = db.query(User).filter(User.nickname == partner["nickname"]).first()
+    if not partner_user:
+        continue
+
+    session_id = str(__import__("uuid").uuid4())
+    session = ChatSession(
+        id=session_id,
+        matchId=f"demo-match-{partner['nickname']}",
+        user1Id=demo_user_id,
+        user2Id=partner_user.id,
+        stage="normal",
+    )
+    db.add(session)
+    db.flush()
+
+    for sender, content in partner["messages"]:
+        db.add(Message(
+            sessionId=session_id,
+            senderId=demo_user_id if sender == "demo" else partner_user.id,
+            type="text",
+            content=content,
+        ))
+
+db.commit()
+print(f"  ✅ 创建了 {len(demo_chat_partners)} 个演示聊天会话 + {sum(len(p['messages']) for p in demo_chat_partners)} 条消息")
 
 # ────────────────────────────
 # 2. 种子攻略 (5篇)
@@ -279,7 +365,6 @@ print(f"  ✅ 创建了 {len(questions_data)} 道种子破冰题")
 # ────────────────────────────
 # 4. 种子广场帖子 (5条)
 # ────────────────────────────
-from models.plaza import PlazaPost, PlazaJoin
 
 plaza_posts = [
     {
@@ -359,7 +444,6 @@ print(f"  ✅ 创建了 {len(plaza_posts)} 条种子广场帖子")
 # ────────────────────────────
 # 5. 种子路线 (3条)
 # ────────────────────────────
-from models.route import CampusRoute, RouteStep
 
 route_data = [
     {

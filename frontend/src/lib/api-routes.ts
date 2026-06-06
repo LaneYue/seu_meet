@@ -1,5 +1,18 @@
 import { http } from "./http"
 
+const DEFAULT_COVER = "/自习女.jpg"
+
+/** 按分类映射本地封面图片（避免用后端 Unsplash 外链，加载失败全部落灰） */
+const COVER_BY_CATEGORY: Record<string, string> = {
+  study: "/自习女.jpg",       // 学习路线
+  food: "/早餐.jpg",         // 美食探店
+  date: "/约会餐.jpg",       // 约会路线
+  outing: "/草原.jpg",       // 外出路线
+  activity: "/骑行1.jpg",    // 活动路线
+  cross_campus: "/山间田野.jpg", // 跨校区
+  other: "/自习女.jpg",      // 兜底
+}
+
 export type MarketRoute = {
   id: string
   title: string
@@ -62,7 +75,7 @@ function guideToMarketRoute(g: BackendGuide): MarketRoute {
     difficulty: "轻松",
     people: g.sales >= 1000 ? `${(g.sales / 1000).toFixed(1)}k` : String(g.sales),
     nodes: 5,
-    image: g.coverImage ?? "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+    image: COVER_BY_CATEGORY[g.category] ?? DEFAULT_COVER,
     intro: "",
     tags: g.tags ?? [],
     price: g.price,

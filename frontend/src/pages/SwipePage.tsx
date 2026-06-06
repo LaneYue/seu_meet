@@ -10,11 +10,13 @@ export function SwipePage() {
   const person = people[index % people.length]
 
   const next = () => setIndex((i) => (i + 1) % people.length)
+  const photos = ["/自习女.jpg", "/骑行1.jpg", "/草原.jpg", "/山间田野.jpg", "/早餐.jpg"]
+  const photo = photos[index % 5]
 
   return (
     <div className="app-screen swipe-screen">
       <StatusBar />
-      <img className="swipe-photo" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="" />
+      <img className="swipe-photo" src={photo} alt="" />
       <div className="swipe-shade" />
       <header className="floating-top">
         <button onClick={() => navigate(-1)} aria-label="返回"><ArrowLeft size={22} /></button>

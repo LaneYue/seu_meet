@@ -1,6 +1,45 @@
 
 /* ── My Profile Page (一级页) ────────────────────────────────────────────── */
 
+/* cover image at top */
+.my-profile-cover {
+  position: relative;
+  margin: -16px -18px 0;         /* negate scroll-page padding */
+  height: 200px;
+  overflow: hidden;
+}
+
+.my-profile-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.my-profile-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.22));
+}
+
+.my-profile-hero-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 18px;
+  right: 18px;
+}
+
+.my-profile-hero-overlay .my-profile-hero-left strong,
+.my-profile-hero-overlay .my-profile-hero-left p {
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+}
+
+.my-profile-hero-overlay .profile-points-chip {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+}
+
 .my-profile-header {
   display: flex;
   align-items: center;
@@ -31,6 +70,13 @@
   height: 52px;
   font-size: 20px;
   border-radius: 16px;
+}
+
+.avatar-sm {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  border-radius: 12px;
 }
 
 .verified-badge {
@@ -104,7 +150,7 @@
   border: 1px solid rgba(226,232,240,0.86);
 }
 
-.profile-post {
+.profile-bio-row .profile-post {
   font-size: 13px;
   color: #475569;
   margin-bottom: 10px !important;
@@ -713,182 +759,142 @@
   padding: 4px 0 2px;
 }
 
-/* ── Profile Swipe Chat Cards (3:4 ratio, stack + swipe) ────────────── */
+/* ── Mini Chat Cards stack ─────────────────────────────────────────── */
 
 .profile-swipe-stack {
   position: relative;
-  /* 3:4 ratio: card width ≈ 340px → height ≈ 453px; stack with ghost offsets */
-  height: min(calc((100vw - 56px) * 4 / 3), 480px);
+  height: min(calc((100vw - 56px) * 1.15), 510px);
   margin-top: 10px;
 }
 
-.profile-swipe-card {
-  position: absolute;
-  left: 2px;
-  right: 2px;
+/* ── Mini Chat Card (absolute positioned children of stack) ──────── */
+
+.profile-mini-chat {
+  position: absolute;           /* <<<< key: all cards are absolute */
+  inset: 0;                     /* fill stack by default */
   border: 1px solid rgba(225, 230, 235, 0.86);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 36px rgba(40, 55, 70, 0.1);
-  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 30px rgba(40, 55, 70, 0.08);
+  backdrop-filter: blur(14px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* 3:4 aspect */
-.profile-swipe-card::before {
-  content: "";
-  display: block;
-  padding-bottom: 133.33%; /* 4/3 = 133.33% */
-}
+/* ── layer positions ─────────────────────────────────────────────── */
 
-.profile-swipe-card .profile-chat-card-inner,
-.profile-swipe-card .profile-chat-card-body-hint {
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.profile-swipe-card .profile-chat-card-inner {
-  top: 0;
-  bottom: 36px; /* room for hint */
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.profile-swipe-card .profile-chat-card-body-hint {
-  bottom: 0;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  color: #94a3b8;
-  border-top: 1px solid rgba(226, 232, 240, 0.5);
+.profile-mini-ghost2 {
+  top: 38px; right: 10px; left: 10px;
+  z-index: 1;
+  transform: scale(0.91);
+  opacity: 0.35;
   pointer-events: none;
 }
 
-/* ghost layers */
-.profile-swipe-ghost-2 {
-  top: 36px;
-  right: 8px;
-  left: 8px;
-  z-index: 1;
-  transform: scale(0.92);
-  opacity: 0.4;
-}
-
-.profile-swipe-ghost-1 {
-  top: 18px;
-  right: 4px;
-  left: 4px;
+.profile-mini-ghost1 {
+  top: 18px; right: 4px; left: 4px;
   z-index: 2;
-  opacity: 0.72;
+  opacity: 0.68;
   transition: transform 200ms ease, opacity 200ms ease;
+  pointer-events: none;
 }
 
-.profile-swipe-active {
+.profile-mini-active {
   z-index: 3;
 }
 
-.profile-swipe-card-dragging {
-  transition: none;
+/* ── swipe pointer overlay (transparent, sits on top of active card) ─ */
+
+.profile-swipe-overlay {
+  position: absolute;
+  inset: 0;
+  bottom: 44px;   /* exclude reply bar so input stays tappable */
+  z-index: 4;
+  touch-action: none;
 }
 
-.profile-swipe-card-exit {
-  transition: transform 260ms cubic-bezier(0.22, 0.88, 0.34, 1);
-}
+/* ── header row ───────────────────────────────────────────────────── */
 
-/* card interior */
-.profile-chat-card-top {
+.profile-mini-chat-header {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.profile-chat-card-meta {
-  flex: 1;
-  min-width: 0;
-}
-
-.profile-chat-card-meta strong {
-  font-size: 16px;
-  color: #1f2937;
-}
-
-.profile-chat-time {
-  color: #94a3b8;
-  font-size: 11px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-left: 8px;
-}
-
-.profile-chat-preview {
-  flex: 1;
-  margin: 0;
-  color: #475569;
-  font-size: 13px;
-  line-height: 1.7;
-  display: -webkit-box;
-  -webkit-line-clamp: 8;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Quick reply bar */
-.profile-quick-reply {
-  display: flex;
-  gap: 8px;
   align-items: center;
-  margin-top: 14px;
-  padding: 6px 6px 6px 14px;
-  border: 1px solid rgba(226, 232, 240, 0.86);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: 0 6px 20px rgba(40, 55, 70, 0.06);
-  backdrop-filter: blur(14px);
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  background: rgba(247, 250, 249, 0.95);
+  flex-shrink: 0;
+  z-index: 1;
 }
 
-.profile-quick-reply input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
+.profile-mini-chat-header strong {
   font-size: 14px;
   color: #1f2937;
 }
 
-.profile-quick-reply input::placeholder {
-  color: #94a3b8;
+/* ── message area ─────────────────────────────────────────────────── */
+
+.profile-mini-chat-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  scrollbar-width: none;
+  background: rgba(247, 250, 249, 0.55);
 }
 
-.profile-quick-reply button {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
-  border: none;
-  background: #23866a;
+.profile-mini-chat-msgs::-webkit-scrollbar { display: none; }
+
+.profile-mini-msg {
+  max-width: 80%;
+}
+
+.profile-mini-msg p {
+  margin: 0;
+  padding: 7px 10px;
+  border-radius: 13px 13px 13px 3px;
+  color: #243244;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(40, 55, 70, 0.04);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.profile-mini-msg.mine { align-self: flex-end; }
+.profile-mini-msg.mine p {
+  border-radius: 13px 13px 3px 13px;
   color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  background: #23866a;
+}
+
+/* ── Internal quick reply bar (bottom of active card) ─────────────── */
+
+.profile-mini-chat-reply {
+  display: flex; gap: 6px; align-items: center;
+  padding: 6px 10px;
+  border-top: 1px solid rgba(226, 232, 240, 0.55);
+  background: rgba(247, 250, 249, 0.95);
   flex-shrink: 0;
 }
 
-.profile-quick-reply button:disabled {
-  background: #cbd5e1;
-  color: #94a3b8;
+.profile-mini-chat-reply input {
+  flex: 1; min-width: 0; border: 0; outline: 0;
+  background: transparent; font-size: 13px; color: #1f2937;
 }
 
+.profile-mini-chat-reply input::placeholder { color: #94a3b8; }
+
+.profile-mini-chat-reply button {
+  width: 32px; height: 32px; border-radius: 9px; border: none;
+  background: #23866a; color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.profile-mini-chat-reply button:disabled { background: #cbd5e1; color: #94a3b8; }
+
 .profile-chat-remaining {
-  text-align: center;
-  color: #94a3b8;
-  font-size: 11px;
-  margin: 10px 0 0;
-  font-weight: 700;
+  text-align: center; color: #94a3b8; font-size: 11px;
+  margin: 10px 0 0; font-weight: 700;
 }

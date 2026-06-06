@@ -7,9 +7,9 @@ import { myProfile, updateMockProfile } from "../data/mock/linkit"
 import { linkitService } from "../services/linkitService"
 
 const themePhotos = [
-  { label: "校园湖畔", url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80" },
-  { label: "学习桌面", url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80" },
-  { label: "城市漫步", url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" },
+  { label: "校园湖畔", url: "/自习女.jpg" },
+  { label: "学习桌面", url: "/山间田野.jpg" },
+  { label: "城市漫步", url: "/早餐.jpg" },
 ]
 
 export function MyProfileEditPage() {

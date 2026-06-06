@@ -177,7 +177,6 @@ export function DiscoverSwipePage() {
   return (
     <div className="app-screen discover-fullscreen with-tabbar">
       <section className="discover-page fullscreen">
-        <button className="home-toggle top-left" onClick={() => navigate("/home/feed")} type="button">主页</button>
         <div className="discover-stack fullscreen" aria-label="同行推送名片">
           {thirdProfile && (
             <article className="discover-card ghost two fullscreen-ghost" aria-hidden="true">

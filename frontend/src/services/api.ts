@@ -100,8 +100,8 @@ export const apiLinkitService: LinkitService = {
     },
 
     async recordSwipe(payload: SwipeActionPayload): Promise<{ ok: true }> {
-      const actionMap: Record<string, string> = { like: "like", dislike: "pass", skip: "pass" }
-      await http.post(`/match/${payload.profileId}/action`, { action: actionMap[payload.action] ?? "pass" })
+      const actionMap: Record<string, string> = { like: "right", dislike: "left", skip: "left" }
+      await http.post(`/match/${payload.profileId}/action`, { action: actionMap[payload.action] ?? "left" })
       return { ok: true }
     },
   },

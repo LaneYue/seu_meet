@@ -44,74 +44,46 @@ export const people: Person[] = [
 
 export const discoverProfiles: DiscoverProfile[] = [
   {
-    id: "sisi",
-    name: "梓宁",
-    age: 20,
-    gender: "♀",
+    id: "sisi", name: "梓宁", age: 20, gender: "♀",
     school: "人文学院 · 大二 · 四牌楼校区",
     verified: "东大学生已认证",
     post: "周末想去四牌楼拍老建筑和梧桐树影，找一个轻松同行的摄影搭子。",
     reason: "你们都收藏了四牌楼文化同行路线，也都喜欢校园摄影。",
     safety: "建议从校园公共空间集合，先完成一次短路线同行。",
     interests: ["摄影", "CityWalk", "咖啡", "博物馆"],
-    photos: [
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
-    ]
+    photos: ["/自习女.jpg", "/骑行1.jpg", "/山间田野.jpg"],
   },
   {
-    id: "anyi",
-    name: "安屿",
-    age: 21,
-    gender: "♂",
+    id: "anyi", name: "安屿", age: 21, gender: "♂",
     school: "计算机学院 · 大三 · 九龙湖校区",
     verified: "统一身份认证",
     post: "今晚在李文正图书馆刷算法题，希望找一个安静自习搭子，结束后可以湖边走走。",
     reason: "你们都参加过九龙湖学习路线，学习时间也比较接近。",
     safety: "自习搭子建议选择图书馆、教学楼等公共空间。",
     interests: ["算法", "羽毛球", "音乐", "夜跑"],
-    photos: [
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=600&q=80"
-    ]
+    photos: ["/草原.jpg", "/早餐.jpg", "/骑行1.jpg"],
   },
   {
-    id: "muxi",
-    name: "慕溪",
-    age: 19,
-    gender: "♀",
+    id: "muxi", name: "慕溪", age: 19, gender: "♀",
     school: "建筑学院 · 大一 · 九龙湖校区",
     verified: "东大学生已认证",
     post: "想找人一起完成校园速写练习，顺便交换一些跨专业选课经验。",
     reason: "你关注了建筑与信息交流，本周也浏览过校园路线。",
     safety: "先从白天路线开始，保持低压力沟通。",
     interests: ["速写", "展览", "骑行", "手作"],
-    photos: [
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=600&q=80"
-    ]
+    photos: ["/山间田野.jpg", "/草原.jpg", "/自习女.jpg"],
   }
 ]
 
 const _myProfile: DiscoverProfile = {
-  id: "me",
-  name: "林岚",
-  age: 20,
-  gender: "♀",
+  id: "me", name: "林岚", age: 20, gender: "♀",
   school: "信息学院 · 大二 · 九龙湖校区",
   verified: "东大学生已认证",
   post: "最近想找一个可以一起自习、散步、探索校园路线的同行搭子。喜欢轻松聊天，也喜欢各自专注。",
   reason: "你们都关注了学习搭子和九龙湖校园路线，适合从一次公共空间同行开始。",
   safety: "我的主页对外只展示昵称、学院大类、校区和兴趣，不展示真实姓名、学号和手机号。",
   interests: ["自习", "摄影", "路线打卡", "咖啡"],
-  photos: [
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"
-  ]
+  photos: ["/自习女.jpg", "/骑行1.jpg", "/早餐.jpg"],
 }
 
 /** 可变副本，供编辑页面修改后全页面即时生效 */
@@ -160,47 +132,23 @@ export const partnerPosts: PartnerPost[] = [
 
 export const routes: CampusRoute[] = [
   {
-    id: "jiulonghu",
-    title: "九龙湖学习搭子路线",
-    badge: "官方路线",
-    campus: "九龙湖",
-    duration: "约 1 天",
-    difficulty: "轻松",
-    people: "1.2k",
-    nodes: 8,
-    progress: 3,
-    image:
-      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+    id: "jiulonghu", title: "九龙湖学习搭子路线", badge: "官方路线", campus: "九龙湖",
+    duration: "约 1 天", difficulty: "轻松", people: "1.2k", nodes: 8, progress: 3,
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
     intro: "从图书馆到教学楼，串起一次温和的共同学习行动。",
     tags: ["自习", "图书馆", "守约"]
   },
   {
-    id: "sipaifang",
-    title: "四牌楼文化同行路线",
-    badge: "人文探索",
-    campus: "四牌楼",
-    duration: "约 3 小时",
-    difficulty: "轻松",
-    people: "860",
-    nodes: 6,
-    progress: 1,
-    image:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80",
+    id: "sipaifang", title: "四牌楼文化同行路线", badge: "人文探索", campus: "四牌楼",
+    duration: "约 3 小时", difficulty: "轻松", people: "860", nodes: 6, progress: 1,
+    image: "/骑行1.jpg",
     intro: "一起走过老校区建筑与树影，认识校园里的另一面。",
     tags: ["文化", "摄影", "历史"]
   },
   {
-    id: "dingjiaqiao",
-    title: "丁家桥医工交流路线",
-    badge: "跨专业",
-    campus: "丁家桥",
-    duration: "约 2 小时",
-    difficulty: "适中",
-    people: "420",
-    nodes: 5,
-    progress: 0,
-    image:
-      "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80",
+    id: "dingjiaqiao", title: "丁家桥医工交流路线", badge: "跨专业", campus: "丁家桥",
+    duration: "约 2 小时", difficulty: "适中", people: "420", nodes: 5, progress: 0,
+    image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80",
     intro: "在医学与工程之间，找到一次低压力的交流机会。",
     tags: ["医工", "交流", "公益"]
   }

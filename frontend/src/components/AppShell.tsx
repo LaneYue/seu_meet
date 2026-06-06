@@ -49,9 +49,10 @@ export function Pill({ children, tone = "green" }: { children: ReactNode; tone?:
   return <span className={`pill ${tone}`}>{children}</span>
 }
 
-export function Avatar({ label, gradient, size }: { label: string; gradient?: string; size?: "lg" }) {
+export function Avatar({ label, gradient, size }: { label: string; gradient?: string; size?: "lg" | "sm" }) {
+  const cls = size === "lg" ? " avatar-lg" : size === "sm" ? " avatar-sm" : ""
   return (
-    <span className={`avatar${size === "lg" ? " avatar-lg" : ""}`} style={{ background: gradient ?? "linear-gradient(135deg,#d1fae5,#bfdbfe)" }}>
+    <span className={`avatar${cls}`} style={{ background: gradient ?? "linear-gradient(135deg,#d1fae5,#bfdbfe)" }}>
       {label}
     </span>
   )

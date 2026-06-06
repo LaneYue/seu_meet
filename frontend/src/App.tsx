@@ -3,7 +3,6 @@ import { PhoneFrame } from "./components/AppShell"
 import { AchievementWallPage } from "./pages/AchievementWallPage"
 import { ChatDetailPage } from "./pages/ChatDetailPage"
 import { DiscoverSwipePage } from "./pages/DiscoverSwipePage"
-import { HomeFeedPage } from "./pages/HomeFeedPage"
 import { IcebreakAnswerPage } from "./pages/IcebreakAnswerPage"
 import { IcebreakResultPage } from "./pages/IcebreakResultPage"
 import { MessagesPage } from "./pages/MessagesPage"
@@ -37,7 +36,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<DiscoverSwipePage />} />
-        <Route path="/home/feed" element={<HomeFeedPage />} />
         <Route path="/home/profile/:profileId" element={<ProfileDetailPage />} />
         <Route path="/me" element={<MyProfilePage />} />
         <Route path="/me/edit" element={<MyProfileEditPage />} />
