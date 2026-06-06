@@ -8,6 +8,7 @@ type PublicProfileCardProps = {
   topSlot?: ReactNode
   className?: string
   style?: CSSProperties
+  "data-stack-layer"?: string
   onPointerDown?: (event: PointerEvent<HTMLElement>) => void
   onPointerMove?: (event: PointerEvent<HTMLElement>) => void
   onPointerUp?: (event: PointerEvent<HTMLElement>) => void
@@ -20,6 +21,7 @@ export function PublicProfileCard({
   topSlot,
   className = "",
   style,
+  "data-stack-layer": stackLayer,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -30,6 +32,7 @@ export function PublicProfileCard({
     <article
       className={`discover-card active-card public-profile-card ${className}`}
       style={style}
+      data-stack-layer={stackLayer}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
