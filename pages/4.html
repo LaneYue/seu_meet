@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>消息 - 东大同行</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2e3132",
+                        "tertiary-container": "#ead2b9",
+                        "on-tertiary-fixed-variant": "#544431",
+                        "inverse-primary": "#79d8b6",
+                        "tertiary": "#6d5b47",
+                        "on-background": "#191c1d",
+                        "secondary-container": "#a5c5fd",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed-dim": "#a8c8ff",
+                        "on-tertiary-fixed": "#261909",
+                        "primary": "#006c52",
+                        "on-secondary-fixed": "#001b3c",
+                        "primary-container": "#88e8c5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#3f5f91",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#00513d",
+                        "tertiary-fixed": "#f7dec5",
+                        "on-tertiary-container": "#6b5945",
+                        "on-secondary-container": "#305182",
+                        "secondary-fixed": "#d6e3ff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "outline-variant": "#bdc9c2",
+                        "on-primary-container": "#006950",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#254777",
+                        "primary-fixed-dim": "#79d8b6",
+                        "surface-container-high": "#e7e8e9",
+                        "tertiary-fixed-dim": "#dac3aa",
+                        "background": "#f8f9fa",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "surface-tint": "#006c52",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "on-primary-fixed": "#002117",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#3e4944",
+                        "primary-fixed": "#95f5d1",
+                        "outline": "#6e7a74",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "1.25rem",
+                        "stack-gap": "1rem",
+                        "inline-gap": "0.75rem",
+                        "section-margin": "2rem"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            /* Soft mesh gradient background to fit the light mode minimal aesthetic */
+            background-color: #f8f9fa;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(160, 100%, 96%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(215, 100%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(30, 100%, 96%, 1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background font-body-md antialiased min-h-screen relative pb-[100px]">
+<!-- TopAppBar (From JSON) -->
+<nav class="fixed top-0 w-full z-50 border-b border-white/30 dark:border-white/10 shadow-sm bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl flex justify-between items-center px-container-padding h-16">
+<!-- Leading Avatar -->
+<button class="w-9 h-9 rounded-full overflow-hidden border-2 border-surface-container-highest hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a young female university student smiling gently. The lighting is soft and bright, highlighting a casual, academic environment. She wears a minimal mint green sweater, aligning perfectly with the app's clean, breezy light-mode UI aesthetic." src="https://lh3.googleusercontent.com/aida/AP1WRLvQeB40eTtirllj8lj6tYSRpAXC0jxDE1gP4c-CjNVkw3z2mxql4lK8joxTZFoPQ5B4zc1FVjatbkR-Q0l9EhxJ13vFuPR1j-Ycv93urGi0OIi_JiA_NsJBWWJPdxmP-WAbqqSYNgrFePI1K7b78baSrOsNJsEzr_sO95jq7N6U-DNpUaurNTHSTWLsfSJPFYJVBGkqvULs9NVDMmvV4qfLH_-7-83FpZYA-gU6uBKAmPZYlqtlw4lk-7Y"/>
+</button>
+<!-- Headline -->
+<div class="font-headline-xl text-headline-xl font-bold text-primary dark:text-inverse-primary tracking-tight">
+            东大同行
+        </div>
+<!-- Trailing Icon -->
+<button class="text-primary dark:text-inverse-primary hover:opacity-80 transition-opacity active:scale-95 duration-200 flex items-center justify-center w-10 h-10 rounded-full bg-primary/5">
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+</button>
+</nav>
+<!-- Main Scrollable Content -->
+<main class="pt-20 px-container-padding max-w-[500px] mx-auto">
+<!-- Page Title & Safety Tip -->
+<div class="mb-6 flex flex-col gap-4">
+<h1 class="font-headline-xl text-headline-xl text-on-background">消息</h1>
+<!-- Soft Yellow Safety Bar -->
+<div class="flex items-start gap-3 bg-tertiary-container/30 border border-tertiary-container/50 backdrop-blur-md rounded-xl p-3.5 shadow-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">safety_check</span>
+<p class="font-label-md text-label-md text-on-tertiary-container pt-0.5 leading-snug">
+                    首次见面建议选择校园公共场所
+                </p>
+<button class="ml-auto text-tertiary/70 hover:text-tertiary">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="flex overflow-x-auto hide-scrollbar gap-inline-gap mb-6 pb-2 -mx-container-padding px-container-padding">
+<button class="shrink-0 px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-transform active:scale-95">全部</button>
+<button class="shrink-0 px-4 py-2 rounded-full bg-surface-container/60 backdrop-blur-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container border border-white/50 transition-colors">搭子</button>
+<button class="shrink-0 px-4 py-2 rounded-full bg-surface-container/60 backdrop-blur-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container border border-white/50 transition-colors">路线</button>
+<button class="shrink-0 px-4 py-2 rounded-full bg-surface-container/60 backdrop-blur-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container border border-white/50 transition-colors">认真关系</button>
+<button class="shrink-0 px-4 py-2 rounded-full bg-surface-container/60 backdrop-blur-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container border border-white/50 transition-colors">系统</button>
+</div>
+<!-- Message List -->
+<div class="flex flex-col gap-3">
+<!-- Chat Item 1 (Unread) -->
+<div class="relative flex items-center gap-4 p-3.5 rounded-2xl bg-surface/60 backdrop-blur-xl border border-white/80 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] cursor-pointer hover:bg-surface/80 transition-colors group">
+<div class="relative w-14 h-14 shrink-0 rounded-full bg-primary-container/30 border border-white/50 p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A bright, airy photo of three college students sitting around a modern library table studying. Soft natural light filters through large windows. The overall tone is cooperative and academic, perfectly matching the supportive campus ecosystem of the app." src="https://lh3.googleusercontent.com/aida/AP1WRLvAwUuUW2zN7yr_p2-_UJ4b9OnZzXizXZ1_tDP9ueicXJT4KfTWVWE9-9Q2T80gsJQUl7Q9xSKDE08e-KyUjH75FnM_jFdN-ckCQRsCTPYNRb2_j9QUJhnEXedlCf6ePp4N0PpTVCdsbKy9PKsAzOZLqY9egeDrctHEUqgttVKQU-xZlWEShTOX7jY5HIHeMzjs2WMSss6xC9Hvads2H5yZGUPVTo7gyhhVPtEhVUwWUr9CFyVNHaL3AGI"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#4ade80] border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-headline-lg text-[16px] text-on-background font-bold truncate">四牌楼晚自习小分队</h3>
+<span class="shrink-0 px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container text-[10px] font-bold tracking-wider border border-secondary-container/20">学习搭子</span>
+</div>
+<span class="shrink-0 text-primary font-label-sm text-label-sm ml-2">10:42 AM</span>
+</div>
+<div class="flex justify-between items-center gap-3">
+<p class="font-body-md text-body-md text-on-background font-medium truncate">李明: 我在一楼靠窗的位置，大家来吧</p>
+<div class="shrink-0 w-5 h-5 rounded-full bg-error text-on-error flex items-center justify-center font-label-sm text-[10px] shadow-sm">3</div>
+</div>
+</div>
+</div>
+<!-- Chat Item 2 -->
+<div class="relative flex items-center gap-4 p-3.5 rounded-2xl bg-surface-container-lowest/40 backdrop-blur-md border border-white/40 shadow-[0px_4px_20px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-surface/80 transition-colors">
+<div class="relative w-14 h-14 shrink-0 rounded-full bg-surface-variant p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A casual portrait of a young male student outdoors on campus, wearing a light jacket. The scene is shot with soft depth of field, bright daylight, and subtle green foliage in the background, conveying a friendly, approachable mood." src="https://lh3.googleusercontent.com/aida/AP1WRLuHKI4Y-enkJoQmdpyqW51AS7PqX_qdDKHfSO5RmMJ_ORByIo5qXYuxtrSVm_47RE5mlBAluYxAjUh5nB-obP9-bp7MGFoyoKlEMR9CiLNfH3CE2Q0RtT7sbB60itRv9rtsIBGv_sVHpXmm7z-BFh0IJaq6r6o02m5ezeMLwUXQ9s4-GDvaCrwPTVZGJ9ltp5YwnnAwGwoEADyCXC4OPNMIghaqkcq5l-vKnNhxUKoo_xLqf118ORM8r_g"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-headline-lg text-[16px] text-on-background font-semibold truncate">张浩然</h3>
+<span class="shrink-0 px-2 py-0.5 rounded-full bg-tertiary-container/40 text-on-tertiary-container text-[10px] font-bold tracking-wider border border-tertiary-container/20">路线小队</span>
+</div>
+<span class="shrink-0 text-outline font-label-sm text-label-sm ml-2">昨天</span>
+</div>
+<div class="flex justify-between items-center gap-3">
+<p class="font-body-md text-body-md text-on-surface-variant truncate">明天早上8点九龙湖校门见哦</p>
+</div>
+</div>
+</div>
+<!-- Chat Item 3 -->
+<div class="relative flex items-center gap-4 p-3.5 rounded-2xl bg-surface-container-lowest/40 backdrop-blur-md border border-white/40 shadow-[0px_4px_20px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-surface/80 transition-colors">
+<div class="relative w-14 h-14 shrink-0 rounded-full flex items-center justify-center bg-primary-container/20 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[28px]">campaign</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-headline-lg text-[16px] text-on-background font-semibold truncate">系统通知</h3>
+<span class="shrink-0 px-2 py-0.5 rounded-full bg-surface-variant/50 text-on-surface-variant text-[10px] font-bold tracking-wider border border-outline-variant/30">系统</span>
+</div>
+<span class="shrink-0 text-outline font-label-sm text-label-sm ml-2">星期二</span>
+</div>
+<div class="flex justify-between items-center gap-3">
+<p class="font-body-md text-body-md text-on-surface-variant truncate">您的学生身份认证已通过审核 🎉</p>
+</div>
+</div>
+</div>
+<!-- Chat Item 4 -->
+<div class="relative flex items-center gap-4 p-3.5 rounded-2xl bg-surface-container-lowest/40 backdrop-blur-md border border-white/40 shadow-[0px_4px_20px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-surface/80 transition-colors">
+<div class="relative w-14 h-14 shrink-0 rounded-full bg-surface-variant p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A clear, smiling portrait of a young woman with glasses sitting in a bright cafe. The lighting is high-key and fresh, emphasizing clean lines and a modern minimalist aesthetic fitting for a premium social app interface." src="https://lh3.googleusercontent.com/aida/AP1WRLsVLViDHNz0BXtbBoejD_S9yjaEdVnkf4IdC7SjzGzC9XSeZ5K5AfaaLcCWcBs51jZ8wBCFrC6fOfoyqUiLRuRMMS2DIyA3Todx3W37jSZXhV-7B038esuQC6AUcWhfvXeUJ_HdgNngDo_I9g932twHHzknZDufRi52t1HvlxAu9O6WdkDQ5gXMTCegLxcQnOB6gjEEw0hj-kJoziBqvR-NLbtXl_WQJcDTEk4WmjDKBirYylHEfo2xOA"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-headline-lg text-[16px] text-on-background font-semibold truncate">林思思</h3>
+<span class="shrink-0 px-2 py-0.5 rounded-full bg-error-container/40 text-on-error-container text-[10px] font-bold tracking-wider border border-error-container/20">认真关系</span>
+</div>
+<span class="shrink-0 text-outline font-label-sm text-label-sm ml-2">11/12</span>
+</div>
+<div class="flex justify-between items-center gap-3">
+<p class="font-body-md text-body-md text-on-surface-variant truncate">推荐的那家咖啡馆确实不错，下次再去。</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (From JSON) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/30 dark:border-white/10 shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl flex justify-around items-center h-20 px-4 pb-safe">
+<!-- Tab 1: 同行 -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16">
+<span class="material-symbols-outlined mb-1 text-[24px]">group</span>
+<span class="font-label-sm text-label-sm">同行</span>
+</button>
+<!-- Tab 2: 路线 -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16">
+<span class="material-symbols-outlined mb-1 text-[24px]">map</span>
+<span class="font-label-sm text-label-sm">路线</span>
+</button>
+<!-- Tab 3: 消息 (Active) -->
+<button class="relative flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-16">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-sm text-label-sm">消息</span>
+<!-- Unread global badge -->
+<div class="absolute top-2 right-3 w-2.5 h-2.5 bg-error border-2 border-surface rounded-full shadow-sm"></div>
+</button>
+</nav>
+</body></html>

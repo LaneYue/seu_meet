@@ -1,4 +1,4 @@
-# IFLand 服务端技术需求文档（TRD-Server）
+﻿# linkit 服务端技术需求文档（TRD-Server）
 
 ---
 
@@ -1507,7 +1507,7 @@ INTIMATE 阶段 → 全部类型
 ### 2.7 WebSocket 事件规范
 
 ```
-连接地址: wss://api.ifland.com/chat
+连接地址: wss://api.linkit.com/chat
 Auth: { token: "access_token" }
 ```
 
@@ -1936,3 +1936,4 @@ POST /api/v1/checkin
 | 10040 | 聊天未解锁 | ✓ |
 | 10041 | 已被对方拉黑 | ✗ 静默处理 |
 | 10999 | 服务器内部错误 | ✗ 显示为"网络错误" |
+

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>东大同行 - 首页</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-surface": "#2e3132",
+                "tertiary-container": "#ead2b9",
+                "on-tertiary-fixed-variant": "#544431",
+                "inverse-primary": "#79d8b6",
+                "tertiary": "#6d5b47",
+                "on-background": "#191c1d",
+                "secondary-container": "#a5c5fd",
+                "on-primary": "#ffffff",
+                "surface-container-highest": "#e1e3e4",
+                "secondary-fixed-dim": "#a8c8ff",
+                "on-tertiary-fixed": "#261909",
+                "primary": "#006c52",
+                "on-secondary-fixed": "#001b3c",
+                "primary-container": "#88e8c5",
+                "surface-container-lowest": "#ffffff",
+                "surface-bright": "#f8f9fa",
+                "secondary": "#3f5f91",
+                "surface-dim": "#d9dadb",
+                "on-primary-fixed-variant": "#00513d",
+                "tertiary-fixed": "#f7dec5",
+                "on-tertiary-container": "#6b5945",
+                "on-secondary-container": "#305182",
+                "secondary-fixed": "#d6e3ff",
+                "inverse-on-surface": "#f0f1f2",
+                "outline-variant": "#bdc9c2",
+                "on-primary-container": "#006950",
+                "error-container": "#ffdad6",
+                "error": "#ba1a1a",
+                "on-secondary-fixed-variant": "#254777",
+                "primary-fixed-dim": "#79d8b6",
+                "surface-container-high": "#e7e8e9",
+                "tertiary-fixed-dim": "#dac3aa",
+                "background": "#f8f9fa",
+                "surface-container-low": "#f3f4f5",
+                "on-secondary": "#ffffff",
+                "surface": "#f8f9fa",
+                "surface-tint": "#006c52",
+                "on-error": "#ffffff",
+                "surface-variant": "#e1e3e4",
+                "surface-container": "#edeeef",
+                "on-primary-fixed": "#002117",
+                "on-surface": "#191c1d",
+                "on-surface-variant": "#3e4944",
+                "primary-fixed": "#95f5d1",
+                "outline": "#6e7a74",
+                "on-tertiary": "#ffffff",
+                "on-error-container": "#93000a"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "container-padding": "1.25rem",
+                "stack-gap": "1rem",
+                "inline-gap": "0.75rem",
+                "section-margin": "2rem"
+        },
+        "fontFamily": {
+                "body-lg": ["Be Vietnam Pro"],
+                "label-md": ["Plus Jakarta Sans"],
+                "body-md": ["Be Vietnam Pro"],
+                "headline-lg": ["Plus Jakarta Sans"],
+                "label-sm": ["Plus Jakarta Sans"],
+                "headline-xl": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-xl": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* Soft Glassmorphism Background Base */
+  body {
+    background: radial-gradient(circle at 10% 10%, rgba(136, 232, 197, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(165, 197, 253, 0.15) 0%, transparent 40%),
+                var(--surface, #f8f9fa);
+    background-attachment: fixed;
+  }
+  
+  /* Hide scrollbar for horizontal scrolling sections */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased min-h-screen relative max-w-[390px] mx-auto bg-surface overflow-x-hidden">
+<!-- TopAppBar -->
+<!-- Applied JSON styling, omitted top/bottom borders per Shell Border Ban -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl shadow-sm flex justify-between items-center px-container-padding h-16 w-full max-w-[390px]">
+<div class="flex items-center hover:opacity-80 transition-opacity active:scale-95 duration-200 cursor-pointer">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container shadow-inner">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close-up portrait of a young college student with a bright, friendly expression. The lighting is soft, natural, and high-key, reflecting a fresh, optimistic, and breezy aesthetic. The background is slightly blurred but suggests a modern, airy university campus setting." src="https://lh3.googleusercontent.com/aida/AP1WRLsd9qYwelMyn-1WuEcQodF7CbVr8nut4PY9hKfnRKJKFBOThsfc0Jvu_gFivjDngi6b-ktmPOIZ9JJRB2wli5LQz1HARyGcvzTzUlS6Uz2QYUzY-kWI4JDdaUh6hb5uaH2IziG9fmyjA9wdyZWLsToOohczuHbS_xybA_609hYEeWlMstQnfO3zDazA1HcUYuHg-c_tal3L8fvjuvQrwWzvQQz0Y7np3rTLMdn_KHaVfz9BF3_0xzIorhs"/>
+</div>
+</div>
+<div class="font-headline-xl text-headline-xl font-bold text-primary dark:text-inverse-primary text-center">
+      东大同行
+    </div>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="pt-[88px] pb-[104px] px-container-padding flex flex-col gap-stack-gap">
+<!-- User Profile Summary Pill -->
+<div class="flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full w-max backdrop-blur-md shadow-[0_4px_12px_rgba(0,108,82,0.05)]">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm text-primary">东大学生已认证 · 九龙湖校区</span>
+</div>
+<!-- Search Bar -->
+<div class="h-[56px] w-full rounded-full bg-white/70 border border-white/50 shadow-[0_8px_24px_rgba(0,0,0,0.03)] backdrop-blur-[20px] flex items-center px-4 gap-3 mt-2 group focus-within:bg-white/90 transition-colors duration-300">
+<span class="material-symbols-outlined text-primary group-focus-within:text-on-primary-container transition-colors">search</span>
+<input class="bg-transparent outline-none w-full font-body-md text-on-surface placeholder:text-outline-variant h-full" placeholder="搜索搭子、路线、活动" type="text"/>
+</div>
+<!-- Quick Access (4-grid) -->
+<div class="grid grid-cols-2 gap-inline-gap mt-4">
+<!-- Item 1 -->
+<button class="bg-white/60 border border-white/60 backdrop-blur-[20px] rounded-2xl p-4 flex flex-col gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.02)] active:scale-95 transition-transform duration-200 text-left relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-primary-container/30 rounded-full blur-xl group-hover:bg-primary-container/50 transition-colors"></div>
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-1 relative z-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface relative z-10">学习搭子</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[11px] relative z-10">组队自习冲刺</span>
+</button>
+<!-- Item 2 -->
+<button class="bg-white/60 border border-white/60 backdrop-blur-[20px] rounded-2xl p-4 flex flex-col gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.02)] active:scale-95 transition-transform duration-200 text-left relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-secondary-container/30 rounded-full blur-xl group-hover:bg-secondary-container/50 transition-colors"></div>
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-1 relative z-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface relative z-10">饭搭子</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[11px] relative z-10">探店品尝美食</span>
+</button>
+<!-- Item 3 -->
+<button class="bg-white/60 border border-white/60 backdrop-blur-[20px] rounded-2xl p-4 flex flex-col gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.02)] active:scale-95 transition-transform duration-200 text-left relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-tertiary-container/40 rounded-full blur-xl group-hover:bg-tertiary-container/60 transition-colors"></div>
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary mb-1 relative z-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sports_basketball</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface relative z-10">运动搭子</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[11px] relative z-10">操场流汗解压</span>
+</button>
+<!-- Item 4 -->
+<button class="bg-white/60 border border-white/60 backdrop-blur-[20px] rounded-2xl p-4 flex flex-col gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.02)] active:scale-95 transition-transform duration-200 text-left relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-error-container/40 rounded-full blur-xl group-hover:bg-error-container/60 transition-colors"></div>
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center text-error mb-1 relative z-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface relative z-10">认真关系</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[11px] relative z-10">随缘寻找灵魂</span>
+</button>
+</div>
+<!-- 今日推荐 (Horizontal Scroll) -->
+<section class="mt-6 flex flex-col gap-3">
+<h2 class="font-headline-lg text-headline-lg text-on-surface px-1">今日推荐</h2>
+<div class="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-container-padding px-container-padding">
+<!-- Card 1 -->
+<div class="shrink-0 w-[240px] bg-white/70 border border-white/50 shadow-[0_12px_40px_rgba(0,0,0,0.04)] rounded-[20px] p-5 snap-start flex flex-col gap-3 backdrop-blur-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary-container/20 to-transparent rounded-bl-full pointer-events-none"></div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shadow-sm border border-white/50">
+<img alt="User 1" class="w-full h-full object-cover" data-alt="A candid profile photo of a young female university student looking creatively inspired. Shot in high-key, soft lighting characteristic of a modern, airy design system. The background is a clean, minimal white or soft gray, creating a breezy and fresh academic aesthetic." src="https://lh3.googleusercontent.com/aida/AP1WRLuD3NGDWxjd7PmgHjlyEeDA-yyyDGS5JhKs8XJW6UbR9iP68-ppTrg8GV1zhh4Q-2uYRjOBNnQ5v68ef5s8iStMaz1FJTYp4Pr-d8lg1uzVq0a7-aWi5GSzQouh7GROlgNFrhiRU--D5FtHQbuYWSSgtLhA23vYtXfk872PyEAZykYSyKfvslDhA5kHhTrdVLxQVfRfBG-_2yQfdSxGzF8JbiiCZn5GADsjXT5ZjgVMO0xcu5BnGe8FlA"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">阿柠</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs">活跃于 2小时前</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-surface-container border border-white/40 px-2 py-1 rounded-md font-label-sm text-[10px] text-on-surface-variant backdrop-blur-sm">建筑学院</span>
+<span class="bg-surface-container border border-white/40 px-2 py-1 rounded-md font-label-sm text-[10px] text-on-surface-variant backdrop-blur-sm">大三</span>
+</div>
+<div class="bg-primary/5 rounded-xl p-3 border border-primary/10 mt-1">
+<p class="font-body-md text-body-md text-on-surface text-sm leading-relaxed">
+              "周末南艺有个装置艺术展，有没有姐妹想一起去拍拍照？"
+            </p>
+</div>
+<button class="mt-2 w-full py-2 bg-primary text-on-primary rounded-xl font-label-md text-label-md shadow-[0_4px_12px_rgba(0,108,82,0.2)] hover:opacity-90 active:scale-[0.98] transition-all">
+            打个招呼
+          </button>
+</div>
+<!-- Card 2 -->
+<div class="shrink-0 w-[240px] bg-white/70 border border-white/50 shadow-[0_12px_40px_rgba(0,0,0,0.04)] rounded-[20px] p-5 snap-start flex flex-col gap-3 backdrop-blur-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-secondary-container/20 to-transparent rounded-bl-full pointer-events-none"></div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shadow-sm border border-white/50">
+<img alt="User 2" class="w-full h-full object-cover" data-alt="A portrait of a male university student looking focused yet friendly. Captured with soft, diffused light against a very minimal, light-colored background. The image evokes a supportive, intellectual, and low-pressure academic environment suitable for a glassmorphism UI." src="https://lh3.googleusercontent.com/aida/AP1WRLvbjoeF2fwTpbFJn8xYWlnCX_ULALX4lPkeR0IZ3aJJXrCZJTk9dVIF-N0eCbPVHmiwUgk5V8wCgBF9mDmEQOB9C5e6UlFYu21PeBy3efjpS_ZhLdp9_khpELZvf6_Dvaff9T7fKXz1h8xJPdhDw_uKv_ZMjDyBXZzfwC70z84FSGHeKbF3KoFdGI9ZzMSY24uvybnA1De60tK4VMlPqpYY5bRHvohebP9_eCphdm971TMKJJnxjqzGyvQ"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">林一</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs">活跃于 刚刚</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-surface-container border border-white/40 px-2 py-1 rounded-md font-label-sm text-[10px] text-on-surface-variant backdrop-blur-sm">计算机学院</span>
+<span class="bg-surface-container border border-white/40 px-2 py-1 rounded-md font-label-sm text-[10px] text-on-surface-variant backdrop-blur-sm">研一</span>
+</div>
+<div class="bg-secondary/5 rounded-xl p-3 border border-secondary/10 mt-1">
+<p class="font-body-md text-body-md text-on-surface text-sm leading-relaxed">
+              "晚上李文正图书馆刷算法题，寻个安静的自习搭子。"
+            </p>
+</div>
+<button class="mt-2 w-full py-2 bg-secondary text-on-primary rounded-xl font-label-md text-label-md shadow-[0_4px_12px_rgba(63,95,145,0.2)] hover:opacity-90 active:scale-[0.98] transition-all">
+            打个招呼
+          </button>
+</div>
+</div>
+</section>
+<!-- 热门需求 (Vertical List) -->
+<section class="mt-4 flex flex-col gap-4">
+<div class="flex justify-between items-end px-1">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">热门需求</h2>
+<span class="font-label-sm text-label-sm text-primary cursor-pointer hover:underline">查看全部</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- List Item 1 -->
+<div class="bg-white/60 border border-white/50 backdrop-blur-[20px] rounded-[16px] p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/30 border border-primary/10 flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_library</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface text-base">图书馆自习搭子</span>
+<div class="flex items-center gap-1 text-on-surface-variant font-body-md text-[11px]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>今日 19:00</span>
+<span class="mx-1">·</span>
+<span>九龙湖校区</span>
+</div>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<!-- List Item 2 -->
+<div class="bg-white/60 border border-white/50 backdrop-blur-[20px] rounded-[16px] p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/30 border border-secondary/10 flex items-center justify-center text-secondary-fixed-dim">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_walk</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface text-base">四牌楼文化路线同行</span>
+<div class="flex items-center gap-1 text-on-surface-variant font-body-md text-[11px]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>明早 09:30</span>
+<span class="mx-1">·</span>
+<span>四牌楼校区</span>
+</div>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-secondary-container hover:text-on-secondary-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<!-- Applied JSON styling, omitted top/bottom borders per Shell Border Ban -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] flex justify-around items-center h-20 px-4 pb-safe w-full max-w-[390px]">
+<!-- Active: 同行 -->
+<div class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-14 cursor-pointer">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-sm text-label-sm">同行</span>
+</div>
+<!-- Inactive: 路线 -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-14 cursor-pointer">
+<span class="material-symbols-outlined mb-1">map</span>
+<span class="font-label-sm text-label-sm">路线</span>
+</div>
+<!-- Inactive: 消息 -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-primary/10 dark:hover:bg-inverse-primary/10 rounded-full transition-colors active:scale-90 duration-200 w-16 h-14 cursor-pointer">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="font-label-sm text-label-sm">消息</span>
+</div>
+</nav>
+</body></html>

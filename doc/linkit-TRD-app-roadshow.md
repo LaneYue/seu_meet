@@ -1,4 +1,4 @@
-# IFLand 前端路演版 TRD（比赛快速开发）
+﻿# linkit 前端路演版 TRD（比赛快速开发）
 
 > 目标：~10 天可 Demo。Web 优先，桌面模拟手机，手机直接使用。AI 友好。
 
@@ -260,7 +260,7 @@ MUI <BottomNavigation> + <BottomNavigationAction>
 ```tsx
 // MUI: Card + TextField + Button
 <Card sx={{ maxWidth: 360, mx: 'auto', mt: 8, p: 3 }}>
-  <Typography variant="h5" align="center">IFLand 校内交友</Typography>
+  <Typography variant="h5" align="center">linkit 校内交友</Typography>
   <TextField label="学号" fullWidth margin="normal" ... />
   <TextField label="密码" type="password" fullWidth margin="normal" ... />
   <Button variant="contained" fullWidth onClick={handleLogin}>登录</Button>
@@ -325,7 +325,7 @@ MUI <BottomNavigation> + <BottomNavigationAction>
   {/* 顶部 AppBar */}
   <AppBar position="static">
     <Toolbar>
-      <Typography>IFLand</Typography>
+      <Typography>linkit</Typography>
       <Chip label="💰120积分" /> {/* 点击跳签到 */}
     </Toolbar>
     <Tabs value={category}>
@@ -918,3 +918,4 @@ pnpm dev          # Vite dev server → localhost:5173
 # 生产打包
 pnpm build        # → dist/ 静态文件，可直接部署到 Nginx
 ```
+

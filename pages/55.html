@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linkit - Plaza</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        /* Custom scrollbar hiding */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Material Icon base */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-secondary-container": "#fffbff",
+                "surface-container-low": "#eff4ff",
+                "on-secondary-fixed": "#07006c",
+                "surface-container-lowest": "#ffffff",
+                "error": "#ba1a1a",
+                "error-container": "#ffdad6",
+                "secondary-fixed-dim": "#c0c1ff",
+                "on-error": "#ffffff",
+                "primary-fixed-dim": "#4ae176",
+                "on-primary-container": "#004b1e",
+                "primary-container": "#22c55e",
+                "inverse-surface": "#213145",
+                "on-primary": "#ffffff",
+                "primary": "#006e2f",
+                "on-secondary-fixed-variant": "#2f2ebe",
+                "on-surface-variant": "#3d4a3d",
+                "on-secondary": "#ffffff",
+                "on-tertiary": "#ffffff",
+                "tertiary-fixed": "#ffdbca",
+                "outline-variant": "#bccbb9",
+                "on-primary-fixed": "#002109",
+                "tertiary": "#9d4300",
+                "surface-tint": "#006e2f",
+                "tertiary-fixed-dim": "#ffb690",
+                "on-primary-fixed-variant": "#005321",
+                "on-error-container": "#93000a",
+                "surface-container-highest": "#d3e4fe",
+                "surface-variant": "#d3e4fe",
+                "secondary": "#4648d4",
+                "on-surface": "#0b1c30",
+                "tertiary-container": "#ff8e4d",
+                "secondary-container": "#6063ee",
+                "on-tertiary-container": "#6d2d00",
+                "on-tertiary-fixed-variant": "#783200",
+                "outline": "#6d7b6c",
+                "surface-dim": "#cbdbf5",
+                "primary-fixed": "#6bff8f",
+                "secondary-fixed": "#e1e0ff",
+                "surface-container": "#e5eeff",
+                "on-background": "#0b1c30",
+                "inverse-on-surface": "#eaf1ff",
+                "surface": "#f8f9ff",
+                "inverse-primary": "#4ae176",
+                "background": "#f8f9ff",
+                "surface-container-high": "#dce9ff",
+                "on-tertiary-fixed": "#341100",
+                "surface-bright": "#f8f9ff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "base": "4px",
+                "margin-desktop": "48px",
+                "xl": "32px",
+                "gutter": "16px",
+                "sm": "12px",
+                "md": "16px",
+                "lg": "24px",
+                "xs": "8px",
+                "margin-mobile": "16px"
+        },
+        "fontFamily": {
+                "body-sm": [
+                        "Plus Jakarta Sans"
+                ],
+                "label-bold": [
+                        "Plus Jakarta Sans"
+                ],
+                "display-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Plus Jakarta Sans"
+                ],
+                "headline-lg": [
+                        "Plus Jakarta Sans"
+                ],
+                "title-md": [
+                        "Plus Jakarta Sans"
+                ],
+                "body-lg": [
+                        "Plus Jakarta Sans"
+                ]
+        },
+        "fontSize": {
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-bold": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "title-md": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-sm antialiased min-h-screen relative">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-md h-14 bg-surface shadow-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary font-title-md text-title-md">hub</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Linkit</span>
+</div>
+<div class="flex items-center">
+<span class="font-label-bold text-label-bold text-primary px-3 py-1.5 rounded-full bg-primary-fixed-dim/20">120 pts</span>
+</div>
+</header>
+<!-- Sub-navigation TabBar -->
+<nav class="fixed top-14 left-0 w-full z-40 bg-surface/95 backdrop-blur-md pt-2 pb-3 px-md overflow-x-auto flex gap-2 hide-scrollbar border-b border-outline-variant/30 shadow-sm">
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-bold text-label-bold shadow-sm">All</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Activities</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Guides</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Feed</button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Play</button>
+</nav>
+<!-- Main Content Area -->
+<main class="pt-[116px] pb-[96px] px-md flex flex-col gap-lg mx-auto max-w-2xl">
+<!-- 1. Activity Card -->
+<article class="bg-surface-container-lowest rounded-[16px] overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 border border-outline-variant/20">
+<div class="h-40 w-full relative bg-surface-container-high">
+<img alt="Basketball Court" class="w-full h-full object-cover" data-alt="A vibrant, modern photograph of an outdoor basketball court on a sunny day. The scene captures the energy of a campus sports event, with high contrast lighting highlighting the bright orange rim and fresh court lines. The mood is active and inviting, fitting a clean, light-mode social app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhl4MmLEv7IRQaBJlgbwXyKOykM9Fb5NDIKAgXVL9Q81AjoV7PNmXEa5LTT5oDWm5SXqLe1AH2_Gggm_VESdJzhuiO1ts0v440RhLaj2g0cXBRWKQMwD2FlGXHMlR44_vQB6wAhKKEZo6mOU_rCcj7GWuFv2KGLHFboqPmBksTLsRbuHgKc5_fB6Ks3DpwQNHDuAjbcJVCFGYcKFz0VCnyytJP-mpqerbNLT5JNQXO4wCERzDagkYvRrpH99EoLkimDazAFWy1gm-8"/>
+<div class="absolute top-3 left-3 bg-surface/90 backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Jun 15</span>
+</div>
+</div>
+<div class="p-md flex flex-col gap-sm">
+<h3 class="font-title-md text-title-md text-on-surface leading-tight">Campus 3v3 Basketball Tournament</h3>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px]">schedule</span> 14:00
+                    <span class="material-symbols-outlined text-[18px] ml-2">location_on</span> Jiulonghu Gym
+                </div>
+<div class="flex items-center justify-between mt-sm pt-sm border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary-fixed border border-surface-container-lowest"></div>
+<div class="w-6 h-6 rounded-full bg-secondary-fixed border border-surface-container-lowest"></div>
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed border border-surface-container-lowest"></div>
+</div>
+<span class="font-body-sm text-body-sm text-outline">12/20 Joined</span>
+</div>
+<button class="bg-primary text-on-primary font-label-bold text-label-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-sm">Apply Now</button>
+</div>
+</div>
+</article>
+<!-- 2. Guide Card -->
+<article class="bg-surface-container-lowest rounded-[16px] overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 border border-outline-variant/20 flex flex-col md:flex-row">
+<div class="h-48 md:h-auto md:w-2/5 relative bg-surface-container-high shrink-0">
+<img alt="Scenic Lake" class="w-full h-full object-cover" data-alt="A serene, beautifully lit landscape photo of a calm lake surrounded by lush green trees on a modern university campus. The light is soft and inviting, suggesting a peaceful, romantic afternoon walk. The color palette features rich greens and cool blues, complementing a clean, digital-first UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa7cjo0wSKamkqZh0pUd1vm2JSJFpLqxegSptXX9kWtrMaEvyhDIKQrfJl8sLx0uMekbsApp5uiRjlc5BGkif8wHxgZcKeViLmiR6i0Y1K21_9o-ejVf973uyVMm6g1rQkqBYI94CPIRDN15QslMKH3cCX2eMu5kBxsX8wBvcM-ayWJB_nBwVyBy9yPkxGY4ZaghEN8O7PJ7DGKXvoNs_o7NqavxbXPv5VXku8QhgoUEfwJDwkKDTZKVDYSjjPFJT080LPNuCKkMiY"/>
+<div class="absolute top-3 right-3 bg-background/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-tertiary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold">4.6</span>
+</div>
+</div>
+<div class="p-md flex flex-col justify-between flex-1 gap-md">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Jiulonghu Romantic 1-Day Tour</h3>
+<p class="font-body-sm text-body-sm text-outline">By Guide Master</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-body-sm text-body-sm text-outline">128 bought</span>
+<div class="flex items-center gap-3">
+<span class="font-label-bold text-label-bold text-primary font-bold">5 pts</span>
+<button class="bg-surface-container text-primary font-label-bold text-label-bold px-4 py-2 rounded-lg hover:bg-surface-container-high transition-colors">Get</button>
+</div>
+</div>
+</div>
+</article>
+<!-- 3. Feed Card -->
+<article class="bg-surface-container-lowest rounded-[16px] p-md shadow-sm hover:shadow-md transition-shadow duration-200 border border-outline-variant/20">
+<div class="flex items-center gap-3 mb-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-label-bold text-label-bold overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVPGot2_EN8PTxws5l96Ql7ElDby-RI_SHP2mVqHdKHNI0dcfa6tRRMtmIxJxVFJdwGv4M7HEcFVemfdR60PmxxhQsTfmzWs_C2D0yUWSpC-JfgbFn23xuejFw2CtDZE6AGfWrhqZ2-V8UCUcBRvMai8usGikSweL9dDgftVLj6xsnVnrNHhYIfCvUCe9-Ukt3DKZZuYgEvkgc9UUS5HierPSXl0xZJxKW3CzYV0FR1s1lv2ocKCah3O7AirT9ahgWCnQ-FZwoTWnZ"/>
+</div>
+<div class="flex-1">
+<h4 class="font-label-bold text-label-bold text-on-surface">Sisi <span class="text-outline font-body-sm text-body-sm ml-1">· Info School</span></h4>
+<p class="font-body-sm text-body-sm text-outline">2 hours ago</p>
+</div>
+<button class="text-outline hover:text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface mb-md">Perfect weather for cycling around Jiulonghu today! The breeze feels amazing. 🚴‍♀️✨</p>
+<div class="grid grid-cols-2 gap-2 rounded-xl overflow-hidden">
+<img alt="Cycling view" class="w-full aspect-square object-cover" data-alt="A bright, aesthetic photo taken from the perspective of someone riding a bicycle on a paved path next to a scenic lake. The sun is shining, casting soft shadows, and the overall vibe is energetic, youthful, and fresh. The image fits seamlessly into a modern, vibrant social media feed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM_2NRmHF-j8S4iEf-UJpYdeE2qQXdx2kUbdGEmyC2z2YpFmpgtR31frpoPBJrOzK6Lb9I-IFQq1FlB4ErHJwiH0Gf-JwITWbIFmDnHbav9Fm4ZzwrZ60d7FhN-L3UMmZmvY3G0VH8EmSJibVQ2gUFpru36IIfO3XJDuas0XD1SsE39PpmZoe72jcngTPB_Imu36Q35UFT6RrH7L_5f-ZH58BpWi5MM-HqX_Kc4xyTWtDSKJiiuVsBJdgsS05_foxxSgOglpem2JnU"/>
+<img alt="Bicycle parked" class="w-full aspect-square object-cover" data-alt="A close-up, high-quality image of a bicycle resting against a modern wooden fence with a clear blue sky and campus buildings in the background. The lighting is crisp and the colors are vibrant, reflecting a positive, active student lifestyle within a clean digital interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3TPohPUHK5WcQmkvnlDgfq2ouXpK7J0kKK8zWKoEzM4L9zhdCPRwjgZDjijOP8DIb2aHvWOHLH9qJAjE9zbH725snp4UQ1IpU0IL2NhSG_3dZcvMK1G3wH9oL1Nlb28ijLWr5j-2lxAJgI6uW3W_ov_Z83QaOZ36qHcQb8gDd7p_Hr5ztAzYH3aL7roV4exIBJ5MnIstxQC9tcR8yX8fcPnICaYVJZ0IuVqxHM6QMGOjPAMyL02ezLpNshKy80zfJhH0DTZkgYrKO"/>
+</div>
+</article>
+<!-- 4. Play Card (Urgency/Glassmorphism hint) -->
+<article class="bg-gradient-to-br from-primary-container/20 to-surface-container-lowest rounded-[16px] p-md shadow-sm border border-primary-container/30 relative overflow-hidden">
+<div class="absolute -top-4 -right-4 text-primary-container/10">
+<span class="material-symbols-outlined text-[100px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<div class="relative z-10 flex flex-col gap-sm">
+<div class="inline-flex px-2 py-0.5 rounded text-primary font-body-sm font-semibold text-body-sm bg-primary/10 w-fit">
+                    Emergency
+                </div>
+<h3 class="font-title-md text-title-md text-on-surface">Dinner at Orange Garden @ 5PM?</h3>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px]">group</span> 1/2 Joined
+                    </div>
+<button class="bg-primary text-on-primary font-label-bold text-label-bold px-6 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-sm">Join</button>
+</div>
+</div>
+</article>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-[88px] right-md w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 z-40">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface border-t border-outline-variant/50">
+<!-- Active Tab: Plaza -->
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-body-sm font-semibold text-body-sm mt-0.5">Plaza</span>
+</div>
+<!-- Inactive Tab: Discover -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined">style</span>
+<span class="font-body-sm font-semibold text-body-sm mt-0.5">Discover</span>
+</div>
+<!-- Inactive Tab: Chats -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-body-sm font-semibold text-body-sm mt-0.5">Chats</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat List</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f8f9ff",
+                    "secondary-container": "#dae2fd",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#002109",
+                    "primary-fixed": "#6bff8f",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#004b1e",
+                    "on-secondary-fixed-variant": "#3f465c",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary-fixed-variant": "#7f2a21",
+                    "on-tertiary-fixed": "#410001",
+                    "on-tertiary-container": "#76231b",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#006e2f",
+                    "secondary": "#565e74",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#9e4036",
+                    "tertiary-container": "#ff8b7c",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed": "#131b2e",
+                    "on-surface-variant": "#3d4a3d",
+                    "on-error": "#ffffff",
+                    "primary-container": "#22c55e",
+                    "primary": "#006e2f",
+                    "on-background": "#0b1c30",
+                    "outline": "#6d7b6c",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface": "#0b1c30",
+                    "inverse-primary": "#4ae176",
+                    "secondary-fixed-dim": "#bec6e0",
+                    "surface-container": "#e5eeff",
+                    "surface": "#f8f9ff",
+                    "primary-fixed-dim": "#4ae176",
+                    "surface-dim": "#cbdbf5",
+                    "secondary-fixed": "#dae2fd",
+                    "inverse-on-surface": "#eaf1ff",
+                    "outline-variant": "#bccbb9",
+                    "tertiary-fixed": "#ffdad5",
+                    "on-primary-fixed-variant": "#005321",
+                    "on-secondary-container": "#5c647a",
+                    "tertiary-fixed-dim": "#ffb4a9",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#d3e4fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "margin-desktop": "48px"
+            },
+            "fontFamily": {
+                    "label-md": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "label-sm": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "display-lg": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "headline-md": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "headline-lg-mobile": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ],
+                    "headline-lg": [
+                            "Plus Jakarta Sans", "sans-serif"
+                    ]
+            },
+            "fontSize": {
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "1.25",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.25",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen antialiased flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-background shadow-sm flex items-center justify-between px-margin-mobile h-16 z-40">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-lowest shadow-sm cursor-pointer hover:opacity-80 transition-opacity">
+<img alt="Student profile photo" class="w-full h-full object-cover" data-alt="A close-up, high-quality headshot of a young adult looking directly at the camera with a warm, optimistic smile. The lighting is soft and bright, creating a welcoming and approachable modern aesthetic consistent with a social networking profile in a light-mode UI. The background is a subtle, clean blur of an urban coffee shop, maintaining a pristine and optimistic mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrFoboLXSchCvY0jW7HewbvH1YEdPWbkVTPtYqxkhB9VnjHbiYl2vYvsayY1H3S72e3W7V2cj9trRv0qkfe6IjgSDkL8tOIhUcTmCesAdhjngRFX_SDpbPHKhaVSX47K8f0MG2jGYGku_0RrkeyXVdlrVq2bCihPpyCtaQeelsXcYhz83IXfK2KMHZzWnbgZQWsuG8N4DA9-jH4TH5-b_H-n-BXcvjv8HfqfznhTkcdneGvxs3YZreWzj3NTDkUHz4ZY-4kkMbe6Ip"/>
+</div>
+<span class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">Linkit</span>
+<button class="w-10 h-10 flex items-center justify-center text-primary hover:opacity-80 transition-opacity active:scale-95 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">leaderboard</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-lg pb-32 max-w-4xl mx-auto w-full space-y-xl">
+<!-- Pending Requests Section -->
+<section>
+<h2 class="font-headline-md text-headline-md mb-md">Pending Requests</h2>
+<div class="relative bg-surface-container-lowest rounded-xl p-lg border border-outline-variant shadow-sm overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-md hover:shadow-md transition-shadow">
+<!-- Decorative background elements -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container opacity-10 rounded-bl-full pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-secondary-container opacity-20 rounded-tr-full pointer-events-none"></div>
+<div class="relative z-10 w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center border-2 border-surface-container-lowest shadow-sm shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl opacity-70">psychology_alt</span>
+</div>
+<div class="relative z-10 flex-1">
+<h3 class="font-label-md text-label-md text-primary mb-xs">Someone wants to know you</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">Icebreaker: "I'm really into urban photography and finding the best hidden coffee spots in the city. If you had to pick one..."</p>
+</div>
+<div class="relative z-10 mt-sm sm:mt-0 w-full sm:w-auto">
+<button class="w-full sm:w-auto bg-primary text-on-primary font-label-md text-label-md px-6 py-2.5 rounded-full hover:opacity-90 active:scale-95 transition-all shadow-sm">
+                        View
+                    </button>
+</div>
+</div>
+</section>
+<!-- My Conversations Section -->
+<section>
+<h2 class="font-headline-md text-headline-md mb-md">My Conversations</h2>
+<div class="flex flex-col gap-sm">
+<!-- Unread Message Item -->
+<div class="group flex items-center gap-md p-md bg-surface-container-lowest rounded-xl hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant/30">
+<div class="relative shrink-0">
+<img alt="Avatar" class="w-14 h-14 rounded-full object-cover shadow-sm border border-outline-variant/20" data-alt="A vivid, sharply focused portrait of a creative professional wearing stylish, modern glasses and casual attire. The individual is expressing a joyful, authentic laugh. The lighting is high-key and natural, perfectly suited for a vibrant social app interface. The background is a solid, soft pastel color that complements a bright, clean green-themed design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUPSt9VRj1qico-8EttD6LORZKVsadFQGVO1Xu7kX_vAr6Rcvouf2uAkfBwe3NxTUK8yIv6EKtajWXHvFy24eHozMgQ5gbUg_2XMIjXgavTwgGkVWnicmDxsa5BlFmzIkwQ63WqRzKBOsYbF6CSWHf_2kCsEYW8AsLHH3Ohx3inw_xXu5BIU3LkEOvQ_5qhigrlWlg9l09CsXOWM7mGLOeeVr2ZIPVPYGj9AM9Z2BQCrhn-BNFvkShsUL3oD9OYzE-uSe0--uspvqt"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-primary rounded-full border-2 border-surface-container-lowest"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-xs">
+<span class="font-label-md text-label-md text-on-surface truncate pr-2">Alex Rivera</span>
+<span class="font-label-sm text-label-sm text-primary shrink-0">12:04 PM</span>
+</div>
+<div class="flex justify-between items-center gap-2">
+<p class="font-body-md text-body-md text-on-surface font-semibold truncate">Are we still on for the design sync later?</p>
+<span class="bg-primary text-on-primary font-label-sm text-[10px] w-5 h-5 flex items-center justify-center rounded-full shrink-0 shadow-sm">2</span>
+</div>
+</div>
+</div>
+<!-- Read Message Item 1 -->
+<div class="group flex items-center gap-md p-md bg-surface-container-lowest rounded-xl hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant/30">
+<div class="relative shrink-0">
+<img alt="Avatar" class="w-14 h-14 rounded-full object-cover shadow-sm border border-outline-variant/20" data-alt="A professional, well-lit studio portrait of a confident woman with curly hair looking slightly off-camera thoughtfully. She is wearing modern, minimalist clothing. The setting features a pristine white background, ensuring the image seamlessly integrates into a light-mode UI. The mood is calm, modern, and engaging." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKcGWycAfFfD6eSVF-bQ4ngHy2cr37cfFHabwfcamV12C1yFy7Y2Jz95eSwlT2z0SDU6dmu2QO4VgiOEPBEiv6phE9xm3TNCfA_tveGW8y7QBMathIuMhSISzIu-WyYAaZ-VbR8wyfFbfDcEczX1RhKLDyNSlM32RO0SUop040lb7HXklxAp6kyq4NxB2HzTyjKvQdMuMpHP7EO8oUEFT9qSucWnQp5iXCI5qbwDd87n1C9z02o8157IYL_ZgrU-7PaHxD0Ts53RW8"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-xs">
+<span class="font-label-md text-label-md text-on-surface truncate pr-2">Sarah Chen</span>
+<span class="font-label-sm text-label-sm text-secondary shrink-0">Yesterday</span>
+</div>
+<div class="flex justify-between items-center gap-2">
+<p class="font-body-md text-body-md text-secondary truncate">That sounds like a great plan. Let's touch base on Monday.</p>
+</div>
+</div>
+</div>
+<!-- Read Message Item 2 -->
+<div class="group flex items-center gap-md p-md bg-surface-container-lowest rounded-xl hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant/30">
+<div class="relative shrink-0 flex">
+<!-- Group Chat Avatar Simulation -->
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary">groups</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-xs">
+<span class="font-label-md text-label-md text-on-surface truncate pr-2">Weekend Hikers</span>
+<span class="font-label-sm text-label-sm text-secondary shrink-0">Tue</span>
+</div>
+<div class="flex justify-between items-center gap-2">
+<p class="font-body-md text-body-md text-secondary truncate">You: I can bring the trail mix.</p>
+</div>
+</div>
+</div>
+<!-- Read Message Item 3 -->
+<div class="group flex items-center gap-md p-md bg-surface-container-lowest rounded-xl hover:bg-surface-container cursor-pointer transition-colors border border-transparent hover:border-outline-variant/30">
+<div class="relative shrink-0">
+<img alt="Avatar" class="w-14 h-14 rounded-full object-cover shadow-sm border border-outline-variant/20" data-alt="A candid, warm lifestyle photo of an older gentleman with a neat beard, smiling gently while standing outdoors. The lighting is sunny and bright, casting soft shadows. The background features slightly out-of-focus lush green foliage, tying perfectly into the optimistic, nature-friendly brand palette of the green-themed design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsu48TRANK5ZKZk6lp0pxKeAiB1eihB4N6QoLmsJ4BQyFidRJh7OBawPXudBsTxdSM9X3cB8B6SPzsLQnd6LCNF-zeq6akw8NuWyPtzsk3Kw4vI8taovS0BU8CZ1NmFfarlhGizaTxsmlkqbhxC1vdaKF1-8rOuHxW0l11jG0xku16YU7iQNP63jO-vfYjRUu5eipPm2aWVLJIzGiClKCVVKaeph2VbAthFGpek1IfFcvmBX8mshZt-2-WWPa1uiFd-UlPt66bec_S"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-xs">
+<span class="font-label-md text-label-md text-on-surface truncate pr-2">David Miller</span>
+<span class="font-label-sm text-label-sm text-secondary shrink-0">Mon</span>
+</div>
+<div class="flex justify-between items-center gap-2">
+<p class="font-body-md text-body-md text-secondary truncate">Thanks for sharing that link!</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-2 bg-surface-container-lowest shadow-lg rounded-t-xl border-t border-transparent md:hidden">
+<!-- Plaza (Inactive) -->
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-secondary-container/50 active:scale-90 duration-200 rounded-lg p-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">diversity_2</span>
+<span class="font-label-sm text-label-sm">Plaza</span>
+</a>
+<!-- Discover (Inactive) -->
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-secondary-container/50 active:scale-90 duration-200 rounded-lg p-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<!-- Chat (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1.5 active:scale-90 duration-200 transition-transform shadow-sm" href="#">
+<span class="material-symbols-outlined mb-0.5" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-sm text-label-sm font-semibold">Chat</span>
+</a>
+</nav>
+</body></html>

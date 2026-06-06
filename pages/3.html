@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>东大同行 - 发现同行者</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#79d8b6",
+                        "primary-fixed-dim": "#79d8b6",
+                        "on-primary-fixed-variant": "#00513d",
+                        "tertiary": "#6d5b47",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed": "#002117",
+                        "background": "#f8f9fa",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a8c8ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "on-primary-container": "#006950",
+                        "surface-tint": "#006c52",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-fixed": "#001b3c",
+                        "tertiary-fixed": "#f7dec5",
+                        "error": "#ba1a1a",
+                        "surface": "#f8f9fa",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-fixed": "#95f5d1",
+                        "primary": "#006c52",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d6e3ff",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#bdc9c2",
+                        "on-tertiary-fixed-variant": "#544431",
+                        "on-secondary-fixed-variant": "#254777",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-secondary-container": "#305182",
+                        "on-surface": "#191c1d",
+                        "tertiary-fixed-dim": "#dac3aa",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ead2b9",
+                        "primary-container": "#88e8c5",
+                        "on-tertiary-fixed": "#261909",
+                        "surface-bright": "#f8f9fa",
+                        "outline": "#6e7a74",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-container": "#a5c5fd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#6b5945",
+                        "on-background": "#191c1d",
+                        "secondary": "#3f5f91",
+                        "on-surface-variant": "#3e4944"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "3xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1rem",
+                        "inline-gap": "0.75rem",
+                        "container-padding": "1.25rem",
+                        "section-margin": "2rem"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+        }
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        /* Hide scrollbar for immersive view */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md h-screen w-full overflow-hidden flex flex-col md:hidden relative selection:bg-primary/20">
+<!-- Top Navigation (Minimal) -->
+<header class="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-5 py-4 pt-12 bg-gradient-to-b from-black/50 to-transparent">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-black/30 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="text-white font-headline-lg drop-shadow-md">发现同行者</span>
+<div class="w-10 h-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Swiper Canvas -->
+<main class="flex-1 w-full h-full relative px-4 pt-24 pb-32">
+<!-- The Swiper Card -->
+<div class="relative w-full h-full rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(0,0,0,0.15)] bg-surface-container-lowest border border-white/20 transform transition-transform duration-300">
+<!-- Background Image -->
+<img alt="Portrait of a young female student smiling warmly, set against a softly blurred, sunlit university campus background. The aesthetic is bright, modern light-mode, with a breezy and intellectual mood." class="absolute inset-0 w-full h-full object-cover" data-alt="Portrait of a young female student smiling warmly, set against a softly blurred, sunlit university campus background. The aesthetic is bright, modern light-mode, with a breezy and intellectual mood. Soft pastels and natural light dominate, aligning with a glassmorphism social app style." src="https://lh3.googleusercontent.com/aida/AP1WRLuSUFuNLPZq8BlCQO-9wcmO3g14c8P9R5Pk8_a2uhQjTw0ftOzNwuBkCO7MeUD_DdrEirgJR2xAAbs8lD5WbImxP3WD4iIod6WRAcfDxQWWZ7EKrnlscMgnUY1mlFfGfKfGym4SuJY8kS0SIO7WibV1PHmCG5bDSNF23uxhGPaDoITtbUb31CNRpPSXFEM6S1ebfOkK05WqEpO2e-NvA9W9B2bP4aUKzN9J0vYdKiP5ZcT2eZpY081o8C0"/>
+<!-- Information Overlay (Bottom Aligned) -->
+<div class="absolute inset-0 glass-overlay flex flex-col justify-end p-6 pb-24 text-white">
+<!-- Name & Age -->
+<div class="flex items-end gap-3 mb-2">
+<h2 class="font-headline-xl text-3xl font-bold tracking-tight">梓宁</h2>
+<div class="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full mb-1">
+<span class="material-symbols-outlined text-[14px] text-pink-300" style="font-variation-settings: 'FILL' 1;">female</span>
+<span class="font-label-sm text-sm">20</span>
+</div>
+</div>
+<!-- Academic Info -->
+<p class="font-body-md text-white/90 mb-4 flex items-center gap-2">
+                    人文学院 <span class="w-1 h-1 rounded-full bg-white/50"></span> 大三 <span class="w-1 h-1 rounded-full bg-white/50"></span> 九龙湖校区
+                </p>
+<!-- Interest Tags -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="glass-pill px-3 py-1 rounded-full font-label-sm text-white">写作</span>
+<span class="glass-pill px-3 py-1 rounded-full font-label-sm text-white">博物馆</span>
+<span class="glass-pill px-3 py-1 rounded-full font-label-sm text-white">咖啡</span>
+<span class="glass-pill px-3 py-1 rounded-full font-label-sm text-white">音乐</span>
+</div>
+<!-- Bio -->
+<p class="font-body-md text-white/95 leading-relaxed mb-4">
+                    喜欢文字与城市漫游，希望能认识有趣的人，一起探索更多可能。
+                </p>
+<!-- Recommended Reason Box -->
+<div class="bg-black/30 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-start gap-3">
+<div class="bg-primary-container text-on-primary-container p-1.5 rounded-lg flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">psychiatry</span>
+</div>
+<div>
+<p class="font-label-md text-white mb-1">推荐理由</p>
+<p class="font-body-md text-white/80 text-sm">你们都喜欢「城市探索」，并且都去过四牌楼校区～</p>
+<!-- Mutual Friends Avatars -->
+<div class="flex -space-x-2 mt-2">
+<img alt="User avatar" class="w-5 h-5 rounded-full border border-surface/50" data-alt="Small circular avatar of a student smiling, bright lighting, soft background." src="https://lh3.googleusercontent.com/aida/AP1WRLsDmvpgyyJzqivskV5dOlQglnKTYF_9H7fEhCKBrQYvty58NmBCBy77HZqxer29R_ZkzLi-BtGj4K0c8wXkWY_lwBp1QP8lj4w05pQJTF-9yF8OGsRdm-21vjf3oq4xmeOchitg2iJ1JzbviU0p39NIcj2mslz9KjcSQpA4Dgfv4fH06F_sXrqqDUPF1VtbWYYN7TLdrjWcYHa8k3wX-UnHlSHD7XGKSTpnreWZodyCK-H7m0VQxDT1toM"/>
+<img alt="User avatar" class="w-5 h-5 rounded-full border border-surface/50" data-alt="Small circular avatar of a student looking thoughtful, bright lighting, soft background." src="https://lh3.googleusercontent.com/aida/AP1WRLuq5rGTXRSj9rTqOlvD9onn5__Wx3Bm3f1oNtpXiJk4e02gEEwv1iCrqUCMtK4XKq59J7-WZKQTJHBTpMWuFh9rW4MSg4HQ9FhONQ5Udo_UaDdg2y3X_QDm-pLzFFySeOhIkPjgZoSRqEEGEOqclQsN3f2-P4sFq6PRFGjfN2aF49iWkLsIImIRVTLGpshqijxvK9lfFGiazyiqpStiO3k3SZDUTXuExyIrKdyfBY-oTyMe8zhQqdgKk6M"/>
+<img alt="User avatar" class="w-5 h-5 rounded-full border border-surface/50" data-alt="Small circular avatar of a student wearing glasses, bright lighting, soft background." src="https://lh3.googleusercontent.com/aida/AP1WRLt0WTDo7xK0qHwtMAGeRFQUZwE4TmgbOpYcJgZKg8TaZXpYqb__I0gZLYB_YZFppzoskSlCRQt658mMZyoPR6SQdaIN3xH6RInSYVWUyYIcXgFd5eRVsMUgYzeOqkoDcK4y0i6uD8t4RT-oEmC921WwQWSUHkd9g5yn2BPoBGg1MO14cJjrE-QSHSubxNsp1UJkiJryrAu8p5r8zkMv_edUGsHB884URaSRfJ57MbVDOp5lwJc-Fbyyng"/>
+<div class="w-5 h-5 rounded-full border border-surface/50 bg-surface-variant flex items-center justify-center text-[8px] text-on-surface-variant z-10">
+                                +8
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Buttons Layer -->
+<div class="absolute bottom-6 left-0 w-full flex justify-center items-center gap-6 px-8 z-20">
+<!-- Skip Button -->
+<button class="w-14 h-14 bg-white/90 backdrop-blur-md rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.1)] flex items-center justify-center text-on-surface-variant hover:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[28px]">close</span>
+</button>
+<!-- Send Request Button -->
+<button class="w-16 h-16 bg-primary rounded-full shadow-[0_12px_24px_rgba(0,108,82,0.3)] flex flex-col items-center justify-center text-white hover:scale-95 transition-transform border-4 border-white/20">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+<!-- Like Button -->
+<button class="w-14 h-14 bg-[#ff6b81] rounded-full shadow-[0_8px_16px_rgba(255,107,129,0.3)] flex items-center justify-center text-white hover:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<!-- Subtle swipe indicators (edges) -->
+<div class="absolute top-1/2 left-4 -translate-y-1/2 text-white/30 flex flex-col items-center gap-1 opacity-0 pointer-events-none">
+<span class="material-symbols-outlined text-[32px]">close</span>
+<span class="font-label-sm">跳过</span>
+</div>
+<div class="absolute top-1/2 right-4 -translate-y-1/2 text-[#ff6b81]/50 flex flex-col items-center gap-1 opacity-0 pointer-events-none">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm">喜欢</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Shared Component Pattern) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-xl border-t border-white/30 dark:border-white/10 shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] rounded-t-3xl">
+<!-- Active Tab: 同行 -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold scale-110 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-label-sm font-label-sm">同行</span>
+</a>
+<!-- Inactive Tab: 路线 -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 dark:text-surface-variant/60 hover:opacity-80 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1">explore</span>
+<span class="text-label-sm font-label-sm">路线</span>
+</a>
+<!-- Inactive Tab: 消息 -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 dark:text-surface-variant/60 hover:opacity-80 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1">chat_bubble</span>
+<span class="text-label-sm font-label-sm">消息</span>
+</a>
+</nav>
+</body></html>
