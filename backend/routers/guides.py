@@ -23,11 +23,15 @@ async def list_guides(
     tags: str = Query(None),
     sort: str = Query("popular"),
     search: str = Query(None),
+    priceFree: bool = Query(False),
     page: int = Query(1, ge=1),
     pageSize: int = Query(20, ge=1, le=50),
     db: Session = Depends(get_db),
 ):
     query = db.query(Guide).filter(Guide.status == "published")
+
+    if priceFree:
+        query = query.filter(Guide.price == 0)
 
     if category:
         query = query.filter(Guide.category == category)

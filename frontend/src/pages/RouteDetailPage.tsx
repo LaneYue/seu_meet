@@ -2,13 +2,20 @@ import { useState } from "react"
 import { ArrowLeft, Clock, Coins, Flag, MapPin, Share2, X } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Pill, StatusBar } from "../components/AppShell"
-import { badges, routeSteps, routes } from "../data/mock/linkit"
+import { routes, routeSteps } from "../data/mock/linkit"
+import { allAchievements, campusLabel } from "../data/achievements"
 import { routesApi } from "../lib/api-routes"
 
 const MOCK_BALANCE = 130
 const ROUTE_PRICES: Record<string, number> = {
   "jiulonghu": 0,
   "sipaifang": 20,
+}
+
+const CAMPUS_ACHIEVEMENT_MAP: Record<string, string[]> = {
+  "九龙湖": ["J"],
+  "四牌楼": ["S"],
+  "丁家桥": ["D"],
 }
 
 export function RouteDetailPage() {
@@ -21,6 +28,12 @@ export function RouteDetailPage() {
   const [balance, setBalance] = useState(MOCK_BALANCE)
   const [showModal, setShowModal] = useState(false)
   const [insufficient, setInsufficient] = useState(false)
+
+  // 按校区筛选徽章
+  const campusPrefixes = CAMPUS_ACHIEVEMENT_MAP[route.campus] ?? ["J"]
+  const campusBadges = allAchievements.filter((a) =>
+    campusPrefixes.some((prefix) => a.code.startsWith(prefix))
+  ).slice(0, 6)
 
   const handlePurchase = async () => {
     if (balance < price) { setInsufficient(true); return }
@@ -82,18 +95,15 @@ export function RouteDetailPage() {
         </section>
 
         <section className="glass-card">
-          <div className="section-title"><h2>电子徽章</h2></div>
-          <div className="badge-grid">
-            {badges.slice(0, 3).map((badge) => {
-              const Icon = badge.icon
-              return (
-                <article className="badge-item" key={badge.name}>
-                  <Icon size={24} />
-                  <strong>{badge.name}</strong>
-                  <span>{badge.level}</span>
-                </article>
-              )
-            })}
+          <div className="section-title"><h2>{route.campus}校区成就吧唧</h2></div>
+          <div className="achievement-preview-row">
+            {campusBadges.slice(0, 4).map((a) => (
+              <span className={`achievement-preview-pin ${a.unlocked ? "" : "locked"}`} key={a.code}>
+                <img src={`/achievements/${a.code}.png`} alt={a.name} className={a.unlocked ? "" : "locked-img"} />
+                <span>{a.name}</span>
+              </span>
+            ))}
+            {campusBadges.length === 0 && <p className="achievement-empty-hint">暂无该校区成就</p>}
           </div>
         </section>
 

@@ -4,6 +4,8 @@ import { AchievementWallPage } from "./pages/AchievementWallPage"
 import { ChatDetailPage } from "./pages/ChatDetailPage"
 import { DiscoverSwipePage } from "./pages/DiscoverSwipePage"
 import { HomeFeedPage } from "./pages/HomeFeedPage"
+import { IcebreakAnswerPage } from "./pages/IcebreakAnswerPage"
+import { IcebreakResultPage } from "./pages/IcebreakResultPage"
 import { MessagesPage } from "./pages/MessagesPage"
 import { MyProfileEditPage } from "./pages/MyProfileEditPage"
 import { MyProfilePage } from "./pages/MyProfilePage"
@@ -62,6 +64,8 @@ export default function App() {
         <Route path="/chats/:chatId/report" element={<ChatReportPage />} />
         <Route path="/chats/:chatId/block" element={<ChatBlockPage />} />
         <Route path="/chats/:chatId/end" element={<ChatEndPage />} />
+        <Route path="/icebreak/:matchId" element={<IcebreakAnswerPage />} />
+        <Route path="/icebreak/:matchId/result" element={<IcebreakResultPage />} />
       </Routes>
     </PhoneFrame>
   )

@@ -96,7 +96,7 @@ export const discoverProfiles: DiscoverProfile[] = [
   }
 ]
 
-export const myProfile: DiscoverProfile = {
+const _myProfile: DiscoverProfile = {
   id: "me",
   name: "林岚",
   age: 20,
@@ -112,6 +112,14 @@ export const myProfile: DiscoverProfile = {
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"
   ]
+}
+
+/** 可变副本，供编辑页面修改后全页面即时生效 */
+export const myProfile: DiscoverProfile = { ..._myProfile }
+
+/** 直接在内存中更新 mock 资料（接入后端前使用） */
+export function updateMockProfile(patch: Partial<DiscoverProfile>) {
+  Object.assign(myProfile, patch)
 }
 
 export const partnerPosts: PartnerPost[] = [

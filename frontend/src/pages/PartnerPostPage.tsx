@@ -1,13 +1,34 @@
 import { ArrowLeft, CalendarDays, MapPin, Send, Users } from "lucide-react"
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { StatusBar } from "../components/AppShell"
+import { linkitService } from "../services/linkitService"
 
-const typeOptions = ["学习", "运动", "生活", "兴趣"]
+const typeOptions = ["study", "sport", "life", "interest"]
+const typeLabels: Record<string, string> = { study: "学习", sport: "运动", life: "生活", interest: "兴趣" }
 
 export function PartnerPostPage() {
   const navigate = useNavigate()
-  const [type, setType] = useState("学习")
+  const [type, setType] = useState("study")
+  const [title, setTitle] = useState("")
+  const [time, setTime] = useState("")
+  const [place, setPlace] = useState("")
+  const [capacity, setCapacity] = useState(6)
+  const [note, setNote] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+
+  const canSubmit = title.trim() && time.trim() && place.trim()
+
+  const handleSubmit = async () => {
+    if (!canSubmit || submitting) return
+    setSubmitting(true)
+    try {
+      await linkitService.partners.createPost({
+        title, type: type as any, time, place, capacity, note,
+      })
+    } catch { /* fallback */ }
+    navigate("/partners")
+  }
 
   return (
     <div className="app-screen detail-screen">
@@ -27,7 +48,7 @@ export function PartnerPostPage() {
         <section className="glass-card editor-panel">
           <label>
             <span><Send size={16} />任务标题</span>
-            <input defaultValue="今晚图书馆自习搭子" placeholder="例如：今晚图书馆自习搭子" />
+            <input value={title} onChange={e => setTitle(e.target.value)} placeholder="例如：今晚图书馆自习搭子" />
           </label>
 
           <div>
@@ -40,7 +61,7 @@ export function PartnerPostPage() {
                   onClick={() => setType(item)}
                   type="button"
                 >
-                  {item}
+                  {typeLabels[item]}
                 </button>
               ))}
             </div>
@@ -48,22 +69,22 @@ export function PartnerPostPage() {
 
           <label>
             <span><CalendarDays size={16} />时间</span>
-            <input defaultValue="今天 19:00-22:00" placeholder="今天 19:00-22:00" />
+            <input value={time} onChange={e => setTime(e.target.value)} placeholder="今天 19:00-22:00" />
           </label>
 
           <label>
             <span><MapPin size={16} />地点</span>
-            <input defaultValue="九龙湖图书馆 · 研习区" placeholder="建议选择校园公共空间" />
+            <input value={place} onChange={e => setPlace(e.target.value)} placeholder="建议选择校园公共空间" />
           </label>
 
           <label>
             <span><Users size={16} />人数上限</span>
-            <input defaultValue="6" inputMode="numeric" />
+            <input value={capacity} onChange={e => setCapacity(Number(e.target.value) || 2)} inputMode="numeric" />
           </label>
 
           <label>
             <span><Send size={16} />补充说明</span>
-            <textarea defaultValue="一起专注学习，互相监督，结束后确认守约状态。" rows={4} />
+            <textarea value={note} onChange={e => setNote(e.target.value)} placeholder="一起专注学习，互相监督..." rows={4} />
           </label>
         </section>
 
@@ -72,7 +93,13 @@ export function PartnerPostPage() {
           <span>首次见面建议选择图书馆、教学楼、食堂等校园公共空间。</span>
         </section>
 
-        <Link className="full-width-action" to="/partners">发布并返回广场</Link>
+        <button
+          className={`full-width-action ${!canSubmit ? "disabled" : ""}`}
+          onClick={handleSubmit}
+          disabled={!canSubmit}
+        >
+          {submitting ? "发布中..." : "发布并返回广场"}
+        </button>
       </div>
     </div>
   )

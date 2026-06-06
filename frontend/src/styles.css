@@ -58,10 +58,7 @@ button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(247, 250, 249, 0.82), rgba(247, 250, 249, 0.96)),
-    url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=70")
-      center top / cover no-repeat;
+  background: linear-gradient(175deg, #eef4f2 0%, #f3f0f8 50%, #f8f5fb 100%);
 }
 
 .with-tabbar {

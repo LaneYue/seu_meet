@@ -1,12 +1,27 @@
-import { ArrowLeft, CheckCircle2, Share2, ShieldCheck } from "lucide-react"
+import { ArrowLeft, CheckCircle2, Heart, Share2, ShieldCheck } from "lucide-react"
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Pill, StatusBar } from "../components/AppShell"
 import { discoverProfiles } from "../data/mock/linkit"
+import { linkitService } from "../services/linkitService"
 
 export function ProfileDetailPage() {
   const { profileId } = useParams()
   const navigate = useNavigate()
   const profile = discoverProfiles.find((item) => item.id === profileId) ?? discoverProfiles[0]
+  const [matched, setMatched] = useState<{ matchId: string; sessionId: string } | null>(null)
+
+  const handleInterested = async () => {
+    try {
+      const result = await linkitService.discover.recordSwipe({
+        profileId: profile.id,
+        action: "like",
+      }) as any
+      if (result?.matched) {
+        setMatched({ matchId: result.matchId, sessionId: result.sessionId })
+      }
+    } catch { /* fallback */ }
+  }
 
   return (
     <div className="app-screen detail-screen">
@@ -50,8 +65,21 @@ export function ProfileDetailPage() {
         </section>
 
         <section className="detail-actions">
-          <button className="primary-action">发同行请求</button>
-          <button onClick={() => navigate("/home")}>返回推送</button>
+          {matched ? (
+            <>
+              <p style={{ textAlign: "center", marginBottom: 8 }}>🎉 匹配成功！</p>
+              <button className="primary-action" onClick={() => navigate(`/icebreak/${matched.matchId}`)}>
+                去答题
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="primary-action" onClick={handleInterested}>
+                <Heart size={16} /> 感兴趣，加好友
+              </button>
+              <button onClick={() => navigate("/home")}>返回推送</button>
+            </>
+          )}
         </section>
       </div>
     </div>

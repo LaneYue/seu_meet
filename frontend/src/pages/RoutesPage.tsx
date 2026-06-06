@@ -108,13 +108,6 @@ export function RoutesPage() {
   }, [activeTab, campus, sort, searchText])
 
   const filteredMarket = marketData
-    .filter((r) => campus === "全部" || r.campus === campus)
-    .filter((r) => !searchText || r.title.includes(searchText) || r.tags.some((t) => t.includes(searchText)))
-    .sort((a, b) => {
-      if (sort === "评分") return b.rating - a.rating
-      if (sort === "免费") return a.price - b.price
-      return b.sales - a.sales
-    })
 
   return (
     <TabLayout>

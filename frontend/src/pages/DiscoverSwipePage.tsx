@@ -1,8 +1,10 @@
-import { useMemo, useState, type PointerEvent } from "react"
+import { useEffect, useMemo, useState, type PointerEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import { BottomNav } from "../components/AppShell"
 import { PublicProfileCard } from "../components/PublicProfileCard"
 import { discoverProfiles } from "../data/mock/linkit"
+import { linkitService } from "../services/linkitService"
+import type { DiscoverProfile } from "../types/linkit"
 
 type DragState = {
   startX: number
@@ -22,15 +24,36 @@ type ExitState = {
 const swipeThreshold = 82
 
 export function DiscoverSwipePage() {
+  const [cards, setCards] = useState<DiscoverProfile[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const [drag, setDrag] = useState<DragState | null>(null)
   const [exit, setExit] = useState<ExitState | null>(null)
   const [gestureLabel, setGestureLabel] = useState("左滑不喜欢，右滑喜欢，上滑看详情")
+  const [matchedUser, setMatchedUser] = useState<{ nickname: string; matchId: string; sessionId: string } | null>(null)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  const profile = discoverProfiles[activeIndex % discoverProfiles.length]
-  const nextProfile = discoverProfiles[(activeIndex + 1) % discoverProfiles.length]
-  const thirdProfile = discoverProfiles[(activeIndex + 2) % discoverProfiles.length]
+  useEffect(() => {
+    linkitService.discover.listProfiles()
+      .then((list) => {
+        if (list.length > 0) {
+          setCards(list)
+        } else {
+          // 后端无数据时用 mock 兜底
+          setCards(discoverProfiles)
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        // 后端不可达时用 mock 兜底
+        setCards(discoverProfiles)
+        setLoading(false)
+      })
+  }, [])
+
+  const profile = cards[activeIndex % Math.max(cards.length, 1)] ?? null
+  const nextProfile = cards[(activeIndex + 1) % Math.max(cards.length, 1)]
+  const thirdProfile = cards[(activeIndex + 2) % Math.max(cards.length, 1)]
 
   const currentMotion = useMemo(() => {
     if (exit) return exit
@@ -45,8 +68,25 @@ export function DiscoverSwipePage() {
     const detailTarget = exit?.detailTarget
     setExit(null)
     setDrag(null)
-    setActiveIndex((value) => (value + 1) % discoverProfiles.length)
+    setActiveIndex((value) => (value + 1) % Math.max(cards.length, 1))
     if (detailTarget) navigate(detailTarget)
+  }
+
+  const recordSwipe = async (action: "like" | "dislike" | "skip") => {
+    if (!profile) return
+    try {
+      const result = await linkitService.discover.recordSwipe({
+        profileId: profile.id,
+        action,
+      }) as any
+      if (result?.matched) {
+        setMatchedUser({
+          nickname: result.targetUser?.nickname ?? "对方",
+          matchId: result.matchId,
+          sessionId: result.sessionId,
+        })
+      }
+    } catch { /* fallback */ }
   }
 
   const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
@@ -86,6 +126,7 @@ export function DiscoverSwipePage() {
     if (absX > absY) {
       const direction = drag.x > 0 ? 1 : -1
       setGestureLabel(drag.x > 0 ? "已喜欢，继续为你推荐" : "已略过，继续为你推荐")
+      recordSwipe(drag.x > 0 ? "like" : "dislike")
       setExit({ x: direction * 520, y: drag.y * 0.35, rotate: direction * 18 })
       return
     }
@@ -97,6 +138,7 @@ export function DiscoverSwipePage() {
     }
 
     setGestureLabel("已下滑跳过")
+    recordSwipe("skip")
     setExit({ x: drag.x * 0.2, y: 620, rotate: 0 })
   }
 
@@ -104,23 +146,55 @@ export function DiscoverSwipePage() {
     if (!exit) setDrag(null)
   }
 
+  if (loading) {
+    return (
+      <div className="app-screen discover-fullscreen with-tabbar">
+        <section className="discover-page fullscreen">
+          <p className="gesture-hint fullscreen">加载中...</p>
+        </section>
+        <BottomNav transparent />
+      </div>
+    )
+  }
+
+  if (!profile) {
+    return (
+      <div className="app-screen discover-fullscreen with-tabbar">
+        <section className="discover-page fullscreen">
+          <p className="gesture-hint fullscreen">今日已无更多推荐，明天再来</p>
+          <button className="full-width-action" style={{ marginTop: 16 }} onClick={() => {
+            linkitService.discover.listProfiles().then((list) => {
+              setCards(list.length > 0 ? list : discoverProfiles)
+              setActiveIndex(0)
+            }).catch(() => { setCards(discoverProfiles); setActiveIndex(0) })
+          }}>刷新</button>
+        </section>
+        <BottomNav transparent />
+      </div>
+    )
+  }
+
   return (
     <div className="app-screen discover-fullscreen with-tabbar">
       <section className="discover-page fullscreen">
         <button className="home-toggle top-left" onClick={() => navigate("/home/feed")} type="button">主页</button>
         <div className="discover-stack fullscreen" aria-label="同行推送名片">
-          <article className="discover-card ghost two fullscreen-ghost" aria-hidden="true">
-            <img src={thirdProfile.photos[0]} alt="" />
-          </article>
-          <article
-            className="discover-card ghost one fullscreen-next"
-            aria-hidden="true"
-            style={{
-              transform: `scale(${nextScale}) translateY(${nextTranslate}px)`
-            }}
-          >
-            <img src={nextProfile.photos[0]} alt="" />
-          </article>
+          {thirdProfile && (
+            <article className="discover-card ghost two fullscreen-ghost" aria-hidden="true">
+              <img src={thirdProfile.photos[0]} alt="" />
+            </article>
+          )}
+          {nextProfile && (
+            <article
+              className="discover-card ghost one fullscreen-next"
+              aria-hidden="true"
+              style={{
+                transform: `scale(${nextScale}) translateY(${nextTranslate}px)`
+              }}
+            >
+              <img src={nextProfile.photos[0]} alt="" />
+            </article>
+          )}
           <PublicProfileCard
             profile={profile}
             className={`swipe-motion-card ${drag ? "dragging" : ""} ${exit ? "exiting" : ""}`}
@@ -136,6 +210,23 @@ export function DiscoverSwipePage() {
         </div>
         <p className="gesture-hint fullscreen">{gestureLabel}</p>
       </section>
+
+      {/* 匹配成功弹窗 */}
+      {matchedUser && (
+        <div className="modal-backdrop" onClick={() => setMatchedUser(null)}>
+          <div className="modal-sheet" onClick={(e) => e.stopPropagation()}>
+            <h2>🎉 你们互相喜欢！</h2>
+            <p>你和{matchedUser.nickname}匹配成功</p>
+            <div className="detail-actions" style={{ marginTop: 16 }}>
+              <button className="primary-action" onClick={() => navigate(`/icebreak/${matchedUser.matchId}`)}>
+                立即答题
+              </button>
+              <button onClick={() => setMatchedUser(null)}>稍后</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <BottomNav transparent />
     </div>
   )

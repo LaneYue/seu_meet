@@ -1,11 +1,15 @@
 import { ArrowLeft, Heart, Send, Share2, X } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { BottomNav, StatusBar } from "../components/AppShell"
 import { people } from "../data/mock/linkit"
 
 export function SwipePage() {
   const navigate = useNavigate()
-  const person = people[0]
+  const [index, setIndex] = useState(0)
+  const person = people[index % people.length]
+
+  const next = () => setIndex((i) => (i + 1) % people.length)
 
   return (
     <div className="app-screen swipe-screen">
@@ -21,17 +25,17 @@ export function SwipePage() {
           <h1>{person.name}</h1>
           <span>♀ 20</span>
         </div>
-        <p>人文学院 · 大二 · 四牌楼校区</p>
+        <p>{person.school}</p>
         <div className="tag-row light">
           {person.tags.map((tag) => <span key={tag}>{tag}</span>)}
         </div>
-        <p className="swipe-copy">喜欢文字与城市漫游，希望认识有趣的人，一起探索更多可能。</p>
-        <small>推荐理由：你们都喜欢校园探索，并且都去过晚樱校区。</small>
+        <p className="swipe-copy">{person.intro}</p>
+        <small>推荐理由：你们都喜欢校园探索，标签高度重合。</small>
       </section>
       <div className="swipe-actions">
-        <button><X size={28} /><span>跳过</span></button>
+        <button onClick={next}><X size={28} /><span>跳过</span></button>
         <button className="send"><Send size={26} /><span>发请求</span></button>
-        <button className="heart"><Heart size={28} /><span>喜欢</span></button>
+        <button className="heart" onClick={next}><Heart size={28} /><span>喜欢</span></button>
       </div>
       <BottomNav />
     </div>

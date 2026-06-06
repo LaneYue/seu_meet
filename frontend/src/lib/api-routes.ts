@@ -82,8 +82,8 @@ export const routesApi = {
     if (params?.sort === "免费") qs.set("price_max", "0")
     const data = await http.get<{ list: BackendGuide[] }>(`/guides?${qs}`)
     let result = data.list.map(guideToMarketRoute)
-    if (params?.campus && params.campus !== "全部") {
-      result = result.filter((r) => r.campus === params.campus)
+    if (params?.sort === "免费") {
+      result = result.filter((r) => r.price === 0)
     }
     return result
   },
