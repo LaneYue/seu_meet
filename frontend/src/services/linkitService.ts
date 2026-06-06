@@ -1,3 +1,4 @@
+import { apiLinkitService } from "./api"
 import {
   badges,
   chats,
@@ -148,5 +149,5 @@ export const mockLinkitService: LinkitService = {
   }
 }
 
-// Swap this export to a real HTTP implementation when the backend is ready.
-export const linkitService: LinkitService = mockLinkitService
+// Switch between mock (offline) and real API. Toggle by changing the export.
+export const linkitService: LinkitService = apiLinkitService
