@@ -28,7 +28,7 @@ import {
   Users,
   X
 } from "lucide-react"
-import type { ReactNode } from "react"
+import { useState, type PointerEvent, type ReactNode } from "react"
 import { Link, Navigate, NavLink, Route, Routes, useNavigate, useParams } from "react-router-dom"
 
 const people = [
@@ -61,6 +61,60 @@ const people = [
     intro: "早八互相叫醒，一起自律打卡。",
     color: "linear-gradient(135deg,#fce7f3,#dcfce7)",
     avatar: "早"
+  }
+]
+
+const discoverProfiles = [
+  {
+    id: "sisi",
+    name: "梓宁",
+    age: 20,
+    gender: "♀",
+    school: "人文学院 · 大二 · 四牌楼校区",
+    verified: "东大学生已认证",
+    post: "周末想去四牌楼拍老建筑和梧桐树影，找一个轻松同行的摄影搭子。",
+    reason: "你们都收藏了四牌楼文化同行路线，也都喜欢校园摄影。",
+    safety: "建议从校园公共空间集合，先完成一次短路线同行。",
+    interests: ["摄影", "CityWalk", "咖啡", "博物馆"],
+    photos: [
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
+    ]
+  },
+  {
+    id: "anyi",
+    name: "安屿",
+    age: 21,
+    gender: "♂",
+    school: "计算机学院 · 大三 · 九龙湖校区",
+    verified: "统一身份认证",
+    post: "今晚在李文正图书馆刷算法题，希望找一个安静自习搭子，结束后可以湖边走走。",
+    reason: "你们都参加过九龙湖学习路线，学习时间也比较接近。",
+    safety: "自习搭子建议选择图书馆、教学楼等公共空间。",
+    interests: ["算法", "羽毛球", "音乐", "夜跑"],
+    photos: [
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=600&q=80"
+    ]
+  },
+  {
+    id: "muxi",
+    name: "慕溪",
+    age: 19,
+    gender: "♀",
+    school: "建筑学院 · 大一 · 九龙湖校区",
+    verified: "东大学生已认证",
+    post: "想找人一起完成校园速写练习，顺便交换一些跨专业选课经验。",
+    reason: "你关注了建筑与信息交流，本周也浏览过校园路线。",
+    safety: "先从白天路线开始，保持低压力沟通。",
+    interests: ["速写", "展览", "骑行", "手作"],
+    photos: [
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=600&q=80"
+    ]
   }
 ]
 
@@ -269,7 +323,164 @@ function Avatar({ label, gradient }: { label: string; gradient?: string }) {
   )
 }
 
-function HomePage() {
+function DiscoverSwipePage() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null)
+  const [gestureLabel, setGestureLabel] = useState("左右滑动选择，上滑看详情")
+  const navigate = useNavigate()
+  const profile = discoverProfiles[activeIndex % discoverProfiles.length]
+  const nextProfile = discoverProfiles[(activeIndex + 1) % discoverProfiles.length]
+
+  const next = () => setActiveIndex((value) => (value + 1) % discoverProfiles.length)
+  const openDetail = () => navigate(`/home/profile/${profile.id}`)
+
+  const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
+    setTouchStart({ x: event.clientX, y: event.clientY })
+  }
+
+  const handlePointerUp = (event: PointerEvent<HTMLElement>) => {
+    if (!touchStart) return
+
+    const deltaX = event.clientX - touchStart.x
+    const deltaY = event.clientY - touchStart.y
+    const absX = Math.abs(deltaX)
+    const absY = Math.abs(deltaY)
+    const threshold = 56
+
+    setTouchStart(null)
+
+    if (Math.max(absX, absY) < threshold) return
+
+    if (absX > absY) {
+      if (deltaX > 0) {
+        setGestureLabel("已喜欢，继续为你推荐")
+        next()
+      } else {
+        setGestureLabel("已跳过，换一张名片")
+        next()
+      }
+      return
+    }
+
+    if (deltaY < 0) {
+      openDetail()
+    } else {
+      setGestureLabel("已下滑跳过")
+      next()
+    }
+  }
+
+  return (
+    <TabLayout>
+      <section className="discover-page">
+        <div className="discover-stack" aria-label="同行推送名片">
+          <article className="discover-card ghost two" aria-hidden="true">
+            <img src={nextProfile.photos[0]} alt="" />
+          </article>
+          <article className="discover-card ghost one" aria-hidden="true">
+            <img src={nextProfile.photos[1]} alt="" />
+          </article>
+          <article
+            className="discover-card active-card"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+          >
+            <img className="profile-cover" src={profile.photos[0]} alt="" />
+            <div className="discover-scrim" />
+            <div className="discover-card-top">
+              <span />
+              <Link to="/home/feed" className="home-toggle">主页</Link>
+              <span />
+            </div>
+            <div className="photo-strip" aria-label="分享图片">
+              {profile.photos.slice(1).map((photo) => (
+                <img src={photo} alt="" key={photo} />
+              ))}
+            </div>
+            <div className="profile-content">
+              <Pill tone="green"><CheckCircle2 size={13} />{profile.verified}</Pill>
+              <div className="discover-name">
+                <h1>{profile.name}</h1>
+                <span>{profile.gender} {profile.age}</span>
+              </div>
+              <p className="school-line"><BookOpen size={16} />{profile.school}</p>
+              <p className="profile-post">{profile.post}</p>
+              <div className="tag-row light">
+                {profile.interests.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+              <div className="match-reason">
+                <Sparkles size={17} />
+                <div>
+                  <strong>推荐理由</strong>
+                  <p>{profile.reason}</p>
+                </div>
+              </div>
+              <p className="discover-safety"><ShieldCheck size={15} />{profile.safety}</p>
+            </div>
+          </article>
+        </div>
+        <p className="gesture-hint">{gestureLabel}</p>
+      </section>
+    </TabLayout>
+  )
+}
+
+function ProfileDetailPage() {
+  const { profileId } = useParams()
+  const navigate = useNavigate()
+  const profile = discoverProfiles.find((item) => item.id === profileId) ?? discoverProfiles[0]
+
+  return (
+    <div className="app-screen detail-screen">
+      <StatusBar />
+      <div className="scroll-page profile-detail-page">
+        <header className="profile-detail-hero">
+          <img src={profile.photos[0]} alt="" />
+          <div className="detail-hero-actions">
+            <button onClick={() => navigate(-1)} aria-label="返回"><ArrowLeft size={21} /></button>
+            <button aria-label="分享"><Share2 size={20} /></button>
+          </div>
+          <div className="profile-detail-title">
+            <Pill tone="green"><CheckCircle2 size={13} />{profile.verified}</Pill>
+            <h1>{profile.name}<span>{profile.gender} {profile.age}</span></h1>
+            <p>{profile.school}</p>
+          </div>
+        </header>
+
+        <section className="glass-card">
+          <div className="section-title"><h2>发布的信息</h2></div>
+          <p>{profile.post}</p>
+        </section>
+
+        <section className="glass-card">
+          <div className="section-title"><h2>分享图片</h2></div>
+          <div className="profile-photo-grid">
+            {profile.photos.map((photo) => <img src={photo} alt="" key={photo} />)}
+          </div>
+        </section>
+
+        <section className="glass-card">
+          <div className="section-title"><h2>爱好</h2></div>
+          <div className="tag-row">
+            {profile.interests.map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
+        </section>
+
+        <section className="safe-notice">
+          <ShieldCheck size={18} />
+          <span>{profile.safety}</span>
+        </section>
+
+        <section className="detail-actions">
+          <button className="primary-action">发同行请求</button>
+          <button onClick={() => navigate("/home")}>返回推送</button>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+function HomeFeedPage() {
   const quick = [
     { title: "学习搭子", desc: "自习 · 备考 · 课程", icon: BookOpen, tone: "mint" },
     { title: "饭搭子", desc: "午饭 · 探店 · 分享", icon: Coffee, tone: "peach" },
@@ -726,7 +937,9 @@ export default function App() {
     <PhoneFrame>
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/home" element={<DiscoverSwipePage />} />
+        <Route path="/home/feed" element={<HomeFeedPage />} />
+        <Route path="/home/profile/:profileId" element={<ProfileDetailPage />} />
         <Route path="/swipe" element={<SwipePage />} />
         <Route path="/partners" element={<PartnerSquarePage />} />
         <Route path="/routes" element={<RoutesPage />} />
